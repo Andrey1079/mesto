@@ -1,0 +1,12 @@
+.root {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-style: normal;
+  font-family: "inter", "Arial", sans-serif;
+  background-color: #000;
+}
