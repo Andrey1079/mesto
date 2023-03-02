@@ -1,0 +1,8 @@
+.button {
+  background-color: transparent;
+  padding: 0;
+  border: 1px solid #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+}

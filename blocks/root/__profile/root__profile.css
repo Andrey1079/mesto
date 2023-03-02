@@ -1,0 +1,10 @@
+.root__profile {
+  margin: 36.25px auto 0 auto;
+}
+
+/* styles for 320-934 */
+@media screen and (max-width: 933px) {
+  .root__profile {
+    margin: 38.25px 19px 0 19px;
+  }
+}

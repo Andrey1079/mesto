@@ -1,0 +1,18 @@
+.profile__user-name {
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1;
+  color: #fff;
+  margin: 22px 0 0 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 527px) {
+  .profile__user-name {
+    font-weight: 500;
+    font-size: 27px;
+    line-height: 1.22;
+    margin-top: 26px;
+    margin-left: 28px;
+  }
+}

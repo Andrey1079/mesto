@@ -1,0 +1,13 @@
+.profile__about-user {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 336px;
+  margin-left: 30px;
+}
+
+@media screen and (max-width: 527px) {
+  .profile__about-user {
+    justify-content: center;
+    margin-left: 0;
+  }
+}

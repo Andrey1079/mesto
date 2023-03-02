@@ -1,0 +1,18 @@
+.profile__add-photo-button {
+  position: relative;
+  width: 150px;
+  height: 50px;
+  background-image: url(../../../images/add_button.svg);
+  background-size: 22px;
+  align-self: center;
+  margin-left: auto;
+}
+
+/* styles for 320-610*/
+@media screen and (max-width: 675px) {
+  .profile__add-photo-button {
+    width: 282px;
+    margin-top: 32px;
+    margin-left: 0;
+  }
+}
