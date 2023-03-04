@@ -7,25 +7,38 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css" />
   </head>
-  <body class="root">
-    <header class="header root__header">
-      <img class="header__logo" src="./images/logo.svg" alt="Логотип" />
-    </header>
-    <main>
-      <section class="profile root__profile">
-        <img
-          class="profile__photo"
-          src="./images/J_Iv_Kusto.jpg"
-          alt="Жак-Ив Кусто"
-        />
-        <div class="profile__about-user">
-          <h1 class="profile__user-name">Жак-Ив Кусто</h1>
-          <button class="button profile__edit-profile-button"></button>
-          <p class="profile__user-profession">Исследователь океана</p>
-        </div>
-        <button class="button profile__add-photo-button"></button>
-      </section>
-    </main>
-    <footer></footer>
+  <body class="page">
+    <div class="page__container">
+      <!--  START HEADER -->
+      <header class="header page__header">
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип" />
+      </header>
+      <!-- END HEADER -->
+
+      <main>
+        <!-- START PROFILE-->
+        <section class="profile page__profile page_narrow-section">
+          <img
+            class="profile__photo"
+            src="./images/J_Iv_Kusto.jpg"
+            alt="Жак-Ив Кусто"
+          />
+          <div class="profile__about-user">
+            <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+            <button class="button profile__edit-profile-button"></button>
+            <p class="profile__user-profession">Исследователь океана</p>
+          </div>
+          <button class="button profile__add-photo-button"></button>
+        </section>
+        <!-- END PROFILE -->
+
+        <!-- START GALLERY -->
+        <section class="gallery page__gallery page_narrow-section"></section>
+      </main>
+
+      <!-- SRART FOOTER -->
+      <footer></footer>
+      <!-- END FOOTER -->
+    </div>
   </body>
 </html>

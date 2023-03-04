@@ -1,11 +1,13 @@
-@import url(../blocks/root/root.css);
 @import url(../vendor/fonts/fonts.css);
 @import url(../vendor/normalize.css);
+@import url(../blocks/page/page.css);
+@import url(../blocks/page/__container/page__container.css);
+@import url(../blocks/page/_size-of-section/_narrow-section/page_narrow-section.css);
 @import url(../blocks/header/header.css);
-@import url(../blocks/root/__header/root__header.css);
+@import url(../blocks/page/__header/page__header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/root/__profile/root__profile.css);
+@import url(../blocks/page/__profile/page__profile.css);
 @import url(../blocks/profile/__user-name/profile__user-name.css);
 @import url(../blocks/profile/__photo/profile__photo.css);
 @import url(../blocks/profile/__about-user/profile__about-user.css);
@@ -13,5 +15,4 @@
 @import url(../blocks/button/button.css);
 @import url(../blocks/profile/__edit-profile-button/profile__edit-profile-button.css);
 @import url(../blocks/profile/__user-profession/profile__user-profession.css);
-@import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__add-photo-button/profile__add-photo-button.css);

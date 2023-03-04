@@ -1,0 +1,5 @@
+@media screen and (max-width: 933px) {
+  .page_narrow-section {
+    width: calc(100% - 38px);
+  }
+}
