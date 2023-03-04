@@ -1,6 +1,5 @@
 .page__container {
   margin: 0 auto;
   max-width: 880px;
-  border: 1px solid red;
-  box-sizing: border-box;
+  width: 100%;
 }

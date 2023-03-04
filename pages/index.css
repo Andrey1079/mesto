@@ -16,3 +16,12 @@
 @import url(../blocks/profile/__edit-profile-button/profile__edit-profile-button.css);
 @import url(../blocks/profile/__user-profession/profile__user-profession.css);
 @import url(../blocks/profile/__add-photo-button/profile__add-photo-button.css);
+@import url(../blocks/gallery/gallery.css);
+@import url(../blocks/page/__gallery/page__gallery.css);
+@import url(../blocks/gallery/__list/gallery__list.css);
+@import url(../blocks/gallery/__item/gallery__item.css);
+@import url(../blocks/gallery/__card/gallery__card.css);
+@import url(../blocks/gallery/__image/gallery__image.css);
+@import url(../blocks/gallery/__city/gallery__city.css);
+@import url(../blocks/gallery/__like-button/gallery__like-button.css);
+@import url(../blocks/gallery/__image-container/gallery__image-container.css);
