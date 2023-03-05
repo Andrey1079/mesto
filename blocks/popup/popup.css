@@ -1,6 +1,7 @@
 .popup {
-  display: flex;
+  display: none;
   justify-content: center;
+  align-items: center;
   position: fixed;
   background-color: rgb(0, 0, 0, 0.5);
   top: 0;

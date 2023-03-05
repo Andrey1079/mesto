@@ -8,3 +8,14 @@
   line-height: 1.22;
   color: #fff;
 }
+
+@media screen and (max-width: 527px) {
+  .popup__submit-button {
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 1.21;
+    margin-top: 15px;
+    margin-bottom: 25px;
+  }
+}

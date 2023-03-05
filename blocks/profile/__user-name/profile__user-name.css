@@ -1,18 +1,24 @@
 .profile__user-name {
+  display: block;
   font-weight: 500;
   font-size: 42px;
   line-height: 1;
   color: #fff;
   margin: 22px 0 0 0;
   padding: 0;
+  max-width: 294px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 527px) {
   .profile__user-name {
+    max-width: 189px;
     font-weight: 500;
     font-size: 27px;
     line-height: 1.22;
     margin-top: 26px;
     margin-left: 28px;
+    text-align: center;
   }
 }
