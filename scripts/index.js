@@ -28,7 +28,7 @@ function addClassPopupVisible() {
   userProfessionInput.setAttribute("value", userProfession.textContent);
   popupElement.classList.add("popup_visible");
 }
-console.log(document.querySelector(".profile__user-name").textContent);
+
 //ФУНКЦИЯ закрытия окна попапа
 function closePopup() {
   popupElement.classList.remove("popup_visible");
