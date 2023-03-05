@@ -117,11 +117,37 @@
             </li>
           </ul>
         </section>
+        <!-- END GALLERY -->
       </main>
 
       <!-- SRART FOOTER -->
-      <footer></footer>
+      <footer class="footer page__footer page_narrow-section">
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+      </footer>
       <!-- END FOOTER -->
+    </div>
+    <div class="popup">
+      <div class="popup__card">
+        <button class="popup__close-button button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form>
+          <fieldset class="popup__form">
+            <input
+              class="popup__form-item popup__user-name"
+              type="text"
+              name="user-name"
+            />
+            <input
+              class="popup__form-item popup__user-profession"
+              type="text"
+              name="user-profession"
+            />
+            <button type="submit" class="popup__submit-button button">
+              Сохранить
+            </button>
+          </fieldset>
+        </form>
+      </div>
     </div>
   </body>
 </html>

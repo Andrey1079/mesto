@@ -1,3 +1,10 @@
 .page__gallery {
   margin: 47.25px auto 0 auto;
 }
+
+/* styles for 320-934 */
+@media screen and (max-width: 933px) {
+  .page__gallery {
+    margin-top: 36px;
+  }
+}
