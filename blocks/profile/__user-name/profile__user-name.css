@@ -7,10 +7,10 @@
   margin: 22px 0 0 0;
   padding: 0;
   max-width: 294px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
+/* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .profile__user-name {
     max-width: 189px;

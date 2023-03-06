@@ -5,6 +5,7 @@
   object-fit: cover;
 }
 
+/* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .profile__photo {
     margin-left: 50px;

@@ -10,6 +10,7 @@
   align-items: center;
 }
 
+/* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .popup__card {
     height: 322px;

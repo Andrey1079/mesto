@@ -9,6 +9,7 @@
   color: #fff;
 }
 
+/* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .popup__submit-button {
     width: 238px;

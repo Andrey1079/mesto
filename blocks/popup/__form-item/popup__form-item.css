@@ -10,6 +10,7 @@
   width: 358px;
 }
 
+/* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .popup__form-item {
     height: 20px;

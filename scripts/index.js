@@ -34,11 +34,13 @@ function closePopup() {
   popupElement.classList.remove("popup_visible");
 }
 
-// ФУНКЦИЯ сохранения новых значений в форме
+// ФУНКЦИЯ отправки формы
 function handleFormSubmit(evt) {
   evt.preventDefault();
-  userName.textContent = userNameInput.value;
-  userProfession.textContent = userProfessionInput.value;
+  let submitUserName = userNameInput.value;
+  let submitUserProfession = userProfessionInput.value;
+  userName.textContent = submitUserName;
+  userProfession.textContent = submitUserProfession;
   closePopup();
 }
 

@@ -9,6 +9,7 @@
   border: none;
 }
 
+/* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .popup__close-button {
     height: 20px;
