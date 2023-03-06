@@ -7,3 +7,8 @@
   margin-top: 31px;
   justify-self: end;
 }
+
+.gallery__like-button:active {
+  background-image: url(../../../images/black_like_img.svg);
+  opacity: 1;
+}

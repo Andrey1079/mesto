@@ -1,7 +1,15 @@
 .header__logo {
-  margin-bottom: 41px;
-  object-fit: cover;
   width: 142px;
+  height: 33px;
+  background-image: url(../../../images/logo.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-bottom: 41px;
+  width: 142px;
+}
+
+.header__logo:hover {
+  background-image: url(../../../images/black_logo.svg);
 }
 
 /* slyles for 600-934 */
