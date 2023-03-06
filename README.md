@@ -17,4 +17,4 @@
 9. Научиться писать функции;
 
 **Ссылка на проект**
-https://andrey1079.github.io/russian-travel/
+https://andrey1079.github.io/mesto/
