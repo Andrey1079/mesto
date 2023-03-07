@@ -1,3 +1,5 @@
 .header {
-  border-bottom: 1px solid #545454;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  line-height: 0;
 }

@@ -1,10 +1,10 @@
 .page__profile {
-  margin: 36.25px auto 0 auto;
+  margin: 40px auto 0 auto;
 }
 
 /* styles for 320-934 */
 @media screen and (max-width: 933px) {
   .page__profile {
-    margin-top: 34px;
+    margin-top: 42px;
   }
 }

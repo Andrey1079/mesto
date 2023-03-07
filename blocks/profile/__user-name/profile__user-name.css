@@ -2,12 +2,14 @@
   display: block;
   font-weight: 500;
   font-size: 42px;
-  line-height: 1;
+  line-height: 1.14;
   color: #fff;
+  width: calc(100% - 42px);
   margin: 22px 0 0 0;
   padding: 0;
-  max-width: 294px;
-  word-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* styles for 320-527 */
