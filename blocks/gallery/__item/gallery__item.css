@@ -1,10 +1,10 @@
 .gallery__item {
+  display: grid;
+  grid-template-columns: auto min-content;
+  grid-template-rows: 1fr min-content;
   width: 100%;
   margin: 0;
   padding: 0;
   background-color: #fff;
   border-radius: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }

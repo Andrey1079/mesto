@@ -1,7 +1,9 @@
 .gallery__image {
-  position: absolute;
-  top: 0;
-  left: 0;
+  aspect-ratio: 1;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  object-position: center;
+  object-fit: cover;
   width: 100%;
   border-radius: 10px 10px 0 0;
 }

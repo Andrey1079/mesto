@@ -1,7 +1,7 @@
 .gallery__city {
   display: block;
   max-width: 218px;
-  margin: 25px 0 32px 21px;
+  margin: 25px 0 25px 21px;
   padding: 0;
   font-weight: 900;
   font-size: 24px;
@@ -10,11 +10,4 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-/* styles for 320-527 */
-@media screen and (max-width: 527px) {
-  .gallery__city {
-    margin-bottom: 25px;
-  }
 }
