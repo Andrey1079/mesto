@@ -4,8 +4,9 @@
   border: 1px solid #fff;
   background-repeat: no-repeat;
   background-position: center;
-  box-sizing: border-box;
+  background-size: cover;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .button:hover {

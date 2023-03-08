@@ -1,14 +1,6 @@
 .profile__about-user {
   display: flex;
-  flex-wrap: wrap;
-  width: calc(100% - 300px);
-  margin-left: 30px;
-}
-
-/* styles for 320-527 */
-@media screen and (max-width: 527px) {
-  .profile__about-user {
-    justify-content: center;
-    margin-left: 0;
-  }
+  flex-direction: column;
+  flex: auto;
+  min-width: 282px;
 }

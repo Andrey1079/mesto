@@ -1,0 +1,10 @@
+.profile__name-plus-button {
+  display: flex;
+}
+
+/* styles for 320-527 */
+@media screen and (max-width: 527px) {
+  .profile__name-plus-button {
+    justify-content: center;
+  }
+}

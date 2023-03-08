@@ -4,9 +4,8 @@
   font-size: 42px;
   line-height: 1.14;
   color: #fff;
-  width: calc(100% - 42px);
   margin: 22px 0 0 0;
-  padding: 0;
+  padding-left: 30px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -15,12 +14,10 @@
 /* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .profile__user-name {
-    max-width: 189px;
     font-weight: 500;
     font-size: 27px;
     line-height: 1.22;
     margin-top: 26px;
-    margin-left: 28px;
     text-align: center;
   }
 }
