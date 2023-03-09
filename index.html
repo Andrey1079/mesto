@@ -30,11 +30,17 @@
           <div class="profile__about-user">
             <div class="profile__name-plus-button">
               <h1 class="profile__user-name">Жак-Ив Кусто</h1>
-              <button class="button profile__edit-profile-button"></button>
+              <button
+                type="button"
+                class="button profile__edit-profile-button"
+              ></button>
             </div>
             <p class="profile__user-profession">Исследователь океана</p>
           </div>
-          <button class="button profile__add-photo-button"></button>
+          <button
+            type="button"
+            class="button profile__add-photo-button"
+          ></button>
         </section>
         <!-- END PROFILE -->
 
@@ -47,8 +53,10 @@
                 src="./images/karachaevsk.jpg"
                 alt="г. Карачаевск"
               />
-              <p class="gallery__city">г. Карачаевск</p>
-              <button class="button gallery__like-button"></button>
+              <h2 class="gallery__city">г. Карачаевск</h2>
+              <button
+                class="button gallery__like-button gallery__like-button_active"
+              ></button>
             </li>
             <li class="gallery__item">
               <img
@@ -56,7 +64,7 @@
                 src="./images/elbrus.jpg"
                 alt="Гора Эльбрус"
               />
-              <p class="gallery__city">Гора Эльбрус</p>
+              <h2 class="gallery__city">Гора Эльбрус</h2>
               <button class="button gallery__like-button"></button>
             </li>
             <li class="gallery__item">
@@ -65,8 +73,11 @@
                 src="./images/dombaj.jpg"
                 alt="Домбай"
               />
-              <p class="gallery__city">Домбай</p>
-              <button class="button gallery__like-button"></button>
+              <h2 class="gallery__city">Домбай</h2>
+              <button
+                type="button"
+                class="button gallery__like-button"
+              ></button>
             </li>
             <li class="gallery__item">
               <img
@@ -74,8 +85,11 @@
                 src="./images/elbrus.jpg"
                 alt="Гора Эльбрус"
               />
-              <p class="gallery__city">Гора Эльбрус</p>
-              <button class="button gallery__like-button"></button>
+              <h2 class="gallery__city">Гора Эльбрус</h2>
+              <button
+                type="button"
+                class="button gallery__like-button"
+              ></button>
             </li>
             <li class="gallery__item">
               <img
@@ -83,8 +97,11 @@
                 src="./images/dombaj.jpg"
                 alt="Домбай"
               />
-              <p class="gallery__city">Домбай</p>
-              <button class="button gallery__like-button"></button>
+              <h2 class="gallery__city">Домбай</h2>
+              <button
+                type="button"
+                class="button gallery__like-button"
+              ></button>
             </li>
             <li class="gallery__item">
               <img
@@ -92,8 +109,11 @@
                 src="./images/karachaevsk.jpg"
                 alt="г. Карачаевск"
               />
-              <p class="gallery__city">Карачаево-Черкесская Республика</p>
-              <button class="button gallery__like-button"></button>
+              <h2 class="gallery__city">Карачаево-Черкесская Республика</h2>
+              <button
+                type="button"
+                class="button gallery__like-button"
+              ></button>
             </li>
           </ul>
         </section>
@@ -110,24 +130,26 @@
     <!-- START POPUP WINDOW -->
     <div class="popup">
       <div class="popup__card">
-        <button class="popup__close-button button"></button>
+        <button type="button" class="popup__close-button button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form>
-          <fieldset class="popup__form">
-            <input
-              class="popup__form-item popup__user-name"
-              type="text"
-              name="user-name"
-            />
-            <input
-              class="popup__form-item popup__user-profession"
-              type="text"
-              name="user-profession"
-            />
-            <button type="submit" class="popup__submit-button button">
-              Сохранить
-            </button>
-          </fieldset>
+        <form name="popup-info" class="popup__form">
+          <input
+            class="popup__form-item popup__form-item_type_name"
+            type="text"
+            name="user-name"
+            placeholder="Жак-Ив Кусто"
+          />
+          <input
+            class="popup__form-item popup__form-item_type_profession"
+            type="text"
+            name="user-profession"
+            placeholder="Исследователь океана"
+          />
+          <input
+            value="Сохранить"
+            type="submit"
+            class="popup__submit-button button"
+          />
         </form>
       </div>
     </div>

@@ -1,4 +1,4 @@
-// нахожу элемент с кнопками закрыть и сохранить
+// нахожу popup
 let popupElement = document.querySelector(".popup");
 
 // нахожу кнопку редактирования профиля
@@ -7,25 +7,26 @@ let editProfileButton = document.querySelector(".profile__edit-profile-button");
 // нахожу кнопку закрытия попапа без сохранения
 let closePopupWindowButton = popupElement.querySelector(".popup__close-button");
 
-// нахожу кнопку сохранения изменений в профиле
-let saveUserNameAndProfessionButton = popupElement.querySelector(
-  ".popup__submit-button"
-);
+// нахожу поле ввода
+let formInput = popupElement.querySelector(".popup__form");
 
-// нахожу поле ввода именем пользователя
-let userNameInput = popupElement.querySelector(".popup__user-name");
 // нахожу элемент с текущим значением имени пользователя
 let userName = document.querySelector(".profile__user-name");
 
-// нахожу поле ввода профессии пользователя
-let userProfessionInput = popupElement.querySelector(".popup__user-profession");
 // нахожу элемент с текущим значением профессии пользователя
 let userProfession = document.querySelector(".profile__user-profession");
 
 //ФУНКЦИЯ открытие окна попапа и задание значений для полей
 function addClassPopupVisible() {
-  userNameInput.setAttribute("value", userName.textContent);
-  userProfessionInput.setAttribute("value", userProfession.textContent);
+  formInput.querySelector(".popup__form-item_type_name").value = "";
+  formInput.querySelector(".popup__form-item_type_profession").value = "";
+
+  formInput
+    .querySelector(".popup__form-item_type_name")
+    .setAttribute("placeholder", userName.textContent);
+  formInput
+    .querySelector(".popup__form-item_type_profession")
+    .setAttribute("placeholder", userProfession.textContent);
   popupElement.classList.add("popup_visible");
 }
 
@@ -37,10 +38,12 @@ function closePopup() {
 // ФУНКЦИЯ отправки формы
 function handleFormSubmit(evt) {
   evt.preventDefault();
-  let submitUserName = userNameInput.value;
-  let submitUserProfession = userProfessionInput.value;
-  userName.textContent = submitUserName;
-  userProfession.textContent = submitUserProfession;
+  userName.textContent = formInput.querySelector(
+    ".popup__form-item_type_name"
+  ).value;
+  userProfession.textContent = formInput.querySelector(
+    ".popup__form-item_type_profession"
+  ).value;
   closePopup();
 }
 
@@ -49,5 +52,4 @@ function handleFormSubmit(evt) {
 editProfileButton.addEventListener("click", addClassPopupVisible);
 // закрытие попапа
 closePopupWindowButton.addEventListener("click", closePopup);
-// сохранение формы
-saveUserNameAndProfessionButton.addEventListener("click", handleFormSubmit);
+formInput.addEventListener("submit", handleFormSubmit);

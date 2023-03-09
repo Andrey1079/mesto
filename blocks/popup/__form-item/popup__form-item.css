@@ -1,20 +1,24 @@
 .popup__form-item {
+  display: block;
+  max-width: 100%;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.214;
   color: #000000;
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: opa;
-  margin: 0 0 30px 0;
-  width: 358px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 29px 36px 0 36px;
+  padding: 0 0 10px 0;
+}
+
+.popup__form-item:first-child {
+  margin-top: 0;
 }
 
 /* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .popup__form-item {
+    margin: 26px 22px 0 22px;
     height: 20px;
-    right: 0px;
-    width: 238px;
   }
 }
