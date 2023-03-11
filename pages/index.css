@@ -23,7 +23,7 @@
 @import url(../blocks/gallery/__image/gallery__image.css);
 @import url(../blocks/gallery/__city/gallery__city.css);
 @import url(../blocks/gallery/__like-button/gallery__like-button.css);
-@import url(../blocks/gallery/__like-button/__like-button_active/gallery__like-button_active.css);
+@import url(../blocks/gallery/__like-button/_active/gallery__like-button_active.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/page/__footer/page__footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);

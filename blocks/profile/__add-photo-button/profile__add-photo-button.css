@@ -9,8 +9,8 @@
   border: 2px solid #fff;
 }
 
-/* styles for 320-800*/
-@media screen and (max-width: 800px) {
+/* styles for 320-920*/
+@media screen and (max-width: 920px) {
   .profile__add-photo-button {
     width: 282px;
     margin-top: 33px;
