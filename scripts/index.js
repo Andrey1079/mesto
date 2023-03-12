@@ -24,8 +24,9 @@ let userProfession = document.querySelector(".profile__user-profession");
 
 //ФУНКЦИЯ открытие окна попапа и задание значений для полей
 function addClassPopupVisible() {
-  formInputUserName.setAttribute("value", userName.textContent);
-  formInputUserProfession.setAttribute("value", userProfession.textContent);
+  formInputUserName.value = userName.textContent;
+  formInputUserProfession.value = userProfession.textContent;
+  
   popupElement.classList.add("popup_visible");
 }
 
