@@ -129,7 +129,7 @@
     </div>
 
     <!-- START POPUP WINDOW -->
-    <div class="popup">
+    <div class="popup popup-edit-profile">
       <div class="popup__card">
         <button type="button" class="popup__close-button button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -155,6 +155,34 @@
       </div>
     </div>
     <!-- END POPUP WINDOW -->
+
+    <!-- START POPUP FOR ADD PHOTO -->
+    <div class="popup popup-add-photo">
+      <div class="popup__card">
+        <button type="button" class="popup__close-button button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form name="popup-info" class="popup__form">
+          <input
+            class="popup__form-item popup__form-item_type_place"
+            type="text"
+            name="place-name"
+            placeholder="Название"
+          />
+          <input
+            class="popup__form-item popup__form-item_type_img-link"
+            type="text"
+            name="img-link"
+            placeholder="Ссылка на картинку"
+          />
+          <input
+            value="Создать"
+            type="submit"
+            class="popup__submit-button button"
+          />
+        </form>
+      </div>
+    </div>
+    <!-- END POPUP FOR ADD PHOTO -->
 
     <script src="./scripts/index.js"></script>
   </body>
