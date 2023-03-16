@@ -1,18 +1,33 @@
 // нахожу попапы
 const popupEditProfile = document.querySelector(".popup-edit-profile");
 const popupAddPhoto = document.querySelector(".popup-add-photo");
+const popupBigPhoto = document.querySelector(".popup-big-photo");
 
-// нахожу кнопки
+// нахожу кнопки открытия попапов
 const editProfileButton = document.querySelector(
   ".profile__edit-profile-button"
 );
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
+
+// нахожу карточки из галереи
+const galleryItemsArr = document.querySelectorAll(".gallery__image");
+
+// нахожу увеличенное фото в попапе
+const popupBigPohotoImage = popupBigPhoto.querySelector(".popup__img");
+
+// нахожу подпись к попапу
+const popupBigPhotoDescription = popupBigPhoto.querySelector(
+  ".popup__place-name-of-big-photo"
+);
 
 // нахожу кнопки закрытия попапов
 const closePopupEditProfileButton = popupEditProfile.querySelector(
   ".popup__close-button"
 );
 const closePopupAddPhotoButton = popupAddPhoto.querySelector(
+  ".popup__close-button"
+);
+const closePopupBigPhotoButton = popupBigPhoto.querySelector(
   ".popup__close-button"
 );
 
@@ -45,14 +60,28 @@ function addClassPopupVisibleForAddPhoto() {
   popupEditProfile.classList.add("popup_visible");
 }
 
+// ФУНКЦИЯ открытия большой фотографии
+function openBigGalleryItem(evt) {
+  popupBigPhoto.classList.add("popup_visible");
+  const currentSrc = evt.target.getAttribute("src");
+  const currentPhotoName = evt.target.getAttribute("alt");
+  popupBigPohotoImage.src = currentSrc;
+  popupBigPohotoImage.alt = currentPhotoName;
+  popupBigPohotoImage.nextElementSibling.textContent =
+    evt.target.nextElementSibling.textContent;
+}
+
 //ФУНКЦИЯ закрытия окна попапа редактирования профиля
 function closePopupEditProfile() {
   popupEditProfile.classList.remove("popup_visible");
 }
-
 //ФУНКЦИЯ закрытия окна попапа добавления фотографий
 function closepopupAddPhoto() {
   popupAddPhoto.classList.remove("popup_visible");
+}
+//ФУНКЦИЯ закрытия окна попапа с большой фотографией
+function closePopupBigPhoto() {
+  popupBigPhoto.classList.remove("popup_visible");
 }
 
 // ФУНКЦИЯ отправки формы
@@ -74,8 +103,14 @@ editProfileButton.addEventListener("click", function () {
 addPhotoButton.addEventListener("click", function () {
   popupAddPhoto.classList.add("popup_visible");
 });
+// открытие фото в большом размере
+galleryItemsArr.forEach(function (item) {
+  item.addEventListener("click", openBigGalleryItem);
+});
 // закрытие попапа редактирования профиля
 closePopupEditProfileButton.addEventListener("click", closePopupEditProfile);
 formInputEditProfile.addEventListener("submit", handleFormSubmit);
 // закрытие попапа добаления фотографий
 closePopupAddPhotoButton.addEventListener("click", closepopupAddPhoto);
+// закрытие попапа большой фотографии
+closePopupBigPhotoButton.addEventListener("click", closePopupBigPhoto);

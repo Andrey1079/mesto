@@ -1,0 +1,8 @@
+.popup__place-name-of-big-photo {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  align-self: flex-start;
+  color: #fff;
+}
