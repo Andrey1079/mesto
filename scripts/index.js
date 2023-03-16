@@ -26,7 +26,7 @@ let userProfession = document.querySelector(".profile__user-profession");
 function addClassPopupVisible() {
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
-  
+
   popupElement.classList.add("popup_visible");
 }
 
