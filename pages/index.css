@@ -39,3 +39,4 @@
 @import url(../blocks/popup/__img/popup__img.css);
 @import url(../blocks/popup/__place-name-of-big-photo/popup__place-name-of-big-photo.css);
 @import url(../blocks/popup/_dark-overlay/popup_dark-overlay.css);
+@import url(../blocks/gallery/__bin-button/gallery__bin-button.css);

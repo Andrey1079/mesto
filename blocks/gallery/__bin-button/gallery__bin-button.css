@@ -1,0 +1,9 @@
+.gallery__bin-button {
+  position: absolute;
+  background-image: url(../../../images/Trash.svg);
+  height: 19px;
+  width: 18px;
+  right: 20px;
+  top: 20px;
+  border: none;
+}

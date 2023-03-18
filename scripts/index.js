@@ -52,7 +52,8 @@ const closePopupBigPhotoButton = popupBigPhoto.querySelector(
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
 
 // карточки из галереи
-const galleryItemsArr = document.querySelectorAll(".gallery__image");
+// const galleryItemsArr = document.querySelectorAll(".gallery__image");
+
 // увеличенное фото в попапе
 const popupBigPohotoImage = popupBigPhoto.querySelector(".popup__img");
 // подпись к увлеличенной фотографии попапа
@@ -99,6 +100,9 @@ function addPlaceFromArr(item) {
   galleryElement
     .querySelector(".gallery__like-button")
     .addEventListener("click", changeLikeButton);
+  galleryElement
+    .querySelector(".gallery__bin-button")
+    .addEventListener("click", deleteGalleryItem);
 }
 
 //ФУНКЦИЯ открытие окна попапа для добавления фото
@@ -106,7 +110,7 @@ function addClassPopupVisibleForAddPhoto() {
   popupEditProfile.classList.add("popup_visible");
 }
 
-//ФУНКЦИЯ добавления фото на страницу
+//ФУНКЦИЯ добавления карточки галереи на страницу
 
 function addNewPlace(evt) {
   evt.preventDefault();
@@ -118,6 +122,12 @@ function addNewPlace(evt) {
   closepopupAddPhoto();
   formInputPlace.value = "";
   formInputPlaceLink.value = "";
+}
+
+// ФУНКЦИЯ удаления места из галлереи
+function deleteGalleryItem(evt) {
+  const deletedGalleryItem = evt.target.closest(".gallery__item");
+  deletedGalleryItem.remove();
 }
 
 // ФУНКЦИЯ открытия большой фотографии
