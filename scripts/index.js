@@ -27,20 +27,11 @@ const galleryArray = [
   },
 ];
 
-// НАПОЛНЕНИЕ ГАЛЕРЕИ
+// ТЕМПЛЕЙТЫ
 const galleryItemTemplate = document.querySelector(
   ".gallery-item-template"
 ).content;
 const galleryList = document.querySelector(".gallery__list");
-galleryArray.forEach(function (item) {
-  const galleryElement = galleryItemTemplate
-    .querySelector(".gallery__item")
-    .cloneNode(true);
-  galleryElement.querySelector(".gallery__image").src = item.link;
-  galleryElement.querySelector(".gallery__image").alt = item.name;
-  galleryElement.querySelector(".gallery__city").textContent = item.name;
-  galleryList.prepend(galleryElement);
-});
 
 // попапы
 const popupEditProfile = document.querySelector(".popup-edit-profile");
@@ -93,9 +84,38 @@ const userName = document.querySelector(".profile__user-name");
 const userProfession = document.querySelector(".profile__user-profession");
 
 //ФУНКЦИИ
+
+//ФУНКЦИЯ добавления мест из массива
+function addPlaceFromArr(item) {
+  const galleryElement = galleryItemTemplate
+    .querySelector(".gallery__item")
+    .cloneNode(true);
+  galleryElement.querySelector(".gallery__image").src = item.link;
+  galleryElement.querySelector(".gallery__image").alt = item.name;
+  galleryElement.querySelector(".gallery__city").textContent = item.name;
+  galleryList.prepend(galleryElement);
+  galleryElement
+    .querySelector(".gallery__image")
+    .addEventListener("click", openBigGalleryItem);
+}
+
 //ФУНКЦИЯ открытие окна попапа для добавления фото
 function addClassPopupVisibleForAddPhoto() {
   popupEditProfile.classList.add("popup_visible");
+}
+
+//ФУНКЦИЯ добавления фото на страницу
+
+function addNewPlace(evt) {
+  evt.preventDefault();
+  const newGalleryItem = {};
+  newGalleryItem.name = formInputPlace.value;
+  newGalleryItem.link = formInputPlaceLink.value;
+  galleryArray.push(newGalleryItem);
+  addPlaceFromArr(newGalleryItem);
+  closepopupAddPhoto();
+  formInputPlace.value = "";
+  formInputPlaceLink.value = "";
 }
 
 // ФУНКЦИЯ открытия большой фотографии
@@ -137,10 +157,9 @@ editProfileButton.addEventListener("click", function () {
 addPhotoButton.addEventListener("click", function () {
   popupAddPhoto.classList.add("popup_visible");
 });
+formInputAddPhoto.addEventListener("submit", addNewPlace);
 // открытие фото в большом размере
-galleryItemsArr.forEach(function (item) {
-  item.addEventListener("click", openBigGalleryItem);
-});
+
 // закрытие попапа редактирования профиля
 closePopupEditProfileButton.addEventListener("click", closePopupEditProfile);
 formInputEditProfile.addEventListener("submit", handleFormSubmit);
@@ -150,3 +169,4 @@ closePopupAddPhotoButton.addEventListener("click", closepopupAddPhoto);
 closePopupBigPhotoButton.addEventListener("click", function () {
   popupBigPhoto.classList.remove("popup_visible");
 });
+galleryArray.forEach(addPlaceFromArr);
