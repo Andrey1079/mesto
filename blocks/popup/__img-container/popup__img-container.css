@@ -3,5 +3,12 @@
   padding: 0;
   position: relative;
   height: calc(100vh - 180px);
-  max-width: calc(100vw - 40px);
+  max-width: calc(100vw - 100px);
+}
+
+@media screen and (max-width: 527px) {
+  .popup__img-container {
+    height: calc(100vh - 270px);
+    max-width: calc(100vw - 80px);
+  }
 }

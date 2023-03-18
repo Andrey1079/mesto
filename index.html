@@ -185,7 +185,7 @@
     <!-- END POPUP FOR ADD PHOTO -->
 
     <!--START POPUP BIG PHOTO  -->
-    <div class="popup popup-big-photo">
+    <div class="popup popup_dark-overlay popup-big-photo">
       <figure class="popup__img-container">
         <button type="button" class="popup__close-button button"></button>
         <img class="popup__img" src="./images/karachaevsk.jpg" alt="" />
@@ -193,6 +193,15 @@
       </figure>
     </div>
     <!-- END POPUP BIG PHOTO -->
+
+    <!-- TEMPLATE FOR GALLERY -->
+    <template class="gallery-item-template">
+      <li class="gallery__item">
+        <img class="gallery__image" src="" alt="" />
+        <h2 class="gallery__city"></h2>
+        <button type="button" class="button gallery__like-button"></button>
+      </li>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

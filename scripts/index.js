@@ -1,4 +1,46 @@
 // ОБЪЯВДЕНИЕ ПЕРЕМЕННЫХ
+// массив с картинками для галереи
+const galleryArray = [
+  {
+    name: "Архыз",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
+
+// НАПОЛНЕНИЕ ГАЛЕРЕИ
+const galleryItemTemplate = document.querySelector(
+  ".gallery-item-template"
+).content;
+const galleryList = document.querySelector(".gallery__list");
+galleryArray.forEach(function (item) {
+  const galleryElement = galleryItemTemplate
+    .querySelector(".gallery__item")
+    .cloneNode(true);
+  galleryElement.querySelector(".gallery__image").src = item.link;
+  galleryElement.querySelector(".gallery__image").alt = item.name;
+  galleryElement.querySelector(".gallery__city").textContent = item.name;
+  galleryList.prepend(galleryElement);
+});
 
 // попапы
 const popupEditProfile = document.querySelector(".popup-edit-profile");
@@ -50,6 +92,7 @@ const userName = document.querySelector(".profile__user-name");
 //значение профессии пользователя
 const userProfession = document.querySelector(".profile__user-profession");
 
+//ФУНКЦИИ
 //ФУНКЦИЯ открытие окна попапа для добавления фото
 function addClassPopupVisibleForAddPhoto() {
   popupEditProfile.classList.add("popup_visible");
