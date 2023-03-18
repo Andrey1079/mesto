@@ -32,7 +32,6 @@ const galleryItemTemplate = document.querySelector(
   ".gallery-item-template"
 ).content;
 const galleryList = document.querySelector(".gallery__list");
-
 // попапы
 const popupEditProfile = document.querySelector(".popup-edit-profile");
 const popupAddPhoto = document.querySelector(".popup-add-photo");
@@ -97,6 +96,9 @@ function addPlaceFromArr(item) {
   galleryElement
     .querySelector(".gallery__image")
     .addEventListener("click", openBigGalleryItem);
+  galleryElement
+    .querySelector(".gallery__like-button")
+    .addEventListener("click", changeLikeButton);
 }
 
 //ФУНКЦИЯ открытие окна попапа для добавления фото
@@ -138,12 +140,17 @@ function closepopupAddPhoto() {
   popupAddPhoto.classList.remove("popup_visible");
 }
 
-// ФУНКЦИЯ отправки формы
+// ФУНКЦИЯ отправки формы профиля юзера
 function handleFormSubmit(evt) {
   evt.preventDefault();
   userName.textContent = formInputUserName.value;
   userProfession.textContent = formInputUserProfession.value;
   closePopupEditProfile();
+}
+
+// ФУНКЦИЯ установки лайка
+function changeLikeButton(evt) {
+  evt.target.classList.toggle("gallery__like-button_active");
 }
 
 // слушатели
