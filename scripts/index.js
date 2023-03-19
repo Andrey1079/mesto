@@ -51,9 +51,6 @@ const closePopupBigPhotoButton = popupBigPhoto.querySelector(
 );
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
 
-// карточки из галереи
-// const galleryItemsArr = document.querySelectorAll(".gallery__image");
-
 // увеличенное фото в попапе
 const popupBigPohotoImage = popupBigPhoto.querySelector(".popup__img");
 // подпись к увлеличенной фотографии попапа
@@ -61,14 +58,15 @@ const popupBigPhotoDescription = popupBigPhoto.querySelector(
   ".popup__place-name-of-big-photo"
 );
 // ПОЛЯ ФОРМ
+// профиль
 const formInputEditProfile = popupEditProfile.querySelector(".popup__form");
-
 const formInputUserName = formInputEditProfile.querySelector(
   ".popup__form-item_type_name"
 );
 const formInputUserProfession = formInputEditProfile.querySelector(
   ".popup__form-item_type_profession"
 );
+// добавление фотографий
 const formInputAddPhoto = popupAddPhoto.querySelector(".popup__form");
 const formInputPlace = formInputAddPhoto.querySelector(
   ".popup__form-item_type_place"
@@ -83,9 +81,7 @@ const userName = document.querySelector(".profile__user-name");
 //значение профессии пользователя
 const userProfession = document.querySelector(".profile__user-profession");
 
-//ФУНКЦИИ
-
-//ФУНКЦИЯ добавления мест из массива
+//ФУНКЦИЯ создания карточки
 function addPlaceFromArr(item) {
   const galleryElement = galleryItemTemplate
     .querySelector(".gallery__item")
@@ -105,8 +101,10 @@ function addPlaceFromArr(item) {
     .addEventListener("click", deleteGalleryItem);
 }
 
-//ФУНКЦИЯ добавления карточки галереи на страницу
+// создание карточек из массива
+galleryArray.forEach(addPlaceFromArr);
 
+//ФУНКЦИЯ добавления нового места в галереи
 function addNewPlace(evt) {
   evt.preventDefault();
   const newGalleryItem = {};
@@ -114,7 +112,7 @@ function addNewPlace(evt) {
   newGalleryItem.link = formInputPlaceLink.value;
   galleryArray.push(newGalleryItem);
   addPlaceFromArr(newGalleryItem);
-  closepopupAddPhoto();
+  closePopupSlowly(popupAddPhoto);
   formInputPlace.value = "";
   formInputPlaceLink.value = "";
 }
@@ -127,42 +125,37 @@ function deleteGalleryItem(evt) {
 
 // ФУНКЦИЯ открытия большой фотографии
 function openBigGalleryItem(evt) {
-  popupBigPhoto.classList.add("popup_opacity_slow-grow");
-  popupBigPhoto.classList.add("popup_visible");
-  const currentSrc = evt.target.getAttribute("src");
-  const currentPhotoName = evt.target.getAttribute("alt");
-  popupBigPohotoImage.src = currentSrc;
-  popupBigPohotoImage.alt = currentPhotoName;
+  openPopupSlowly(popupBigPhoto);
+  popupBigPohotoImage.src = evt.target.getAttribute("src");
+  popupBigPohotoImage.alt = evt.target.getAttribute("alt");
   popupBigPohotoImage.nextElementSibling.textContent =
     evt.target.nextElementSibling.textContent;
 }
 
-//ФУНКЦИЯ закрытия окна попапа редактирования профиля
-function closePopupEditProfile() {
-  popupEditProfile.classList.add("popup_opacity_slow-damp");
+//ФКНКЦИЯ медленного открытия
+function openPopupSlowly(item) {
+  item.classList.add("popup_opacity_slow-grow");
+  item.classList.add("popup_visible");
   setTimeout(function () {
-    popupEditProfile.classList.remove("popup_visible");
-    popupEditProfile.classList.remove("popup_opacity_slow-damp");
-    popupEditProfile.classList.remove("popup_opacity_slow-grow");
+    item.classList.remove("popup_opacity_slow-grow");
+  }, 1000);
+}
+
+// ФУНКЦИЯ медленного закрытия
+function closePopupSlowly(item) {
+  item.classList.add("popup_opacity_slow-damp");
+  setTimeout(function () {
+    item.classList.remove("popup_visible");
+    item.classList.remove("popup_opacity_slow-damp");
   }, 800);
 }
-//ФУНКЦИЯ закрытия окна попапа добавления фотографий
-function closepopupAddPhoto() {
-  popupAddPhoto.classList.add("popup_opacity_slow-damp");
-  setTimeout(function () {
-    popupAddPhoto.classList.remove("popup_visible");
-    popupAddPhoto.classList.remove("popup_opacity_slow-damp");
-    popupAddPhoto.classList.remove("popup_opacity_slow-grow");
-  }, 800);
-}
-// ФУНКЦИЯ закрытия больш
 
 // ФУНКЦИЯ отправки формы профиля юзера
 function handleFormSubmit(evt) {
   evt.preventDefault();
   userName.textContent = formInputUserName.value;
   userProfession.textContent = formInputUserProfession.value;
-  closePopupEditProfile();
+  closePopupSlowly(popupEditProfile);
 }
 
 // ФУНКЦИЯ установки лайка
@@ -175,29 +168,24 @@ function changeLikeButton(evt) {
 editProfileButton.addEventListener("click", function () {
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
-  popupEditProfile.classList.add("popup_opacity_slow-grow");
-  popupEditProfile.classList.add("popup_visible");
+  openPopupSlowly(popupEditProfile);
 });
 // добавление фотографий
 addPhotoButton.addEventListener("click", function () {
-  popupAddPhoto.classList.add("popup_opacity_slow-grow");
-  popupAddPhoto.classList.add("popup_visible");
+  openPopupSlowly(popupAddPhoto);
 });
 formInputAddPhoto.addEventListener("submit", addNewPlace);
-// открытие фото в большом размере
 
 // закрытие попапа редактирования профиля
-closePopupEditProfileButton.addEventListener("click", closePopupEditProfile);
+closePopupEditProfileButton.addEventListener("click", function () {
+  closePopupSlowly(popupEditProfile);
+});
 formInputEditProfile.addEventListener("submit", handleFormSubmit);
 // закрытие попапа добаления фотографий
-closePopupAddPhotoButton.addEventListener("click", closepopupAddPhoto);
+closePopupAddPhotoButton.addEventListener("click", function () {
+  closePopupSlowly(popupAddPhoto);
+});
 // закрытие попапа большой фотографии
 closePopupBigPhotoButton.addEventListener("click", function () {
-  popupBigPhoto.classList.add("popup_opacity_slow_damp");
-  setTimeout(function () {
-    popupBigPhoto.classList.remove("popup_visible");
-    popupBigPhoto.classList.remove("popup_opacity_slow-damp");
-    popupBigPhoto.classList.remove("popup_opacity_slow-grow");
-  }, 800);
+  closePopupSlowly(popupBigPhoto);
 });
-galleryArray.forEach(addPlaceFromArr);
