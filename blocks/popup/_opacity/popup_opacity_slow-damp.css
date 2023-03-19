@@ -1,0 +1,12 @@
+@keyframes opacity-damp {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.popup_opacity_slow-damp {
+  animation: opacity-damp 1s;
+}

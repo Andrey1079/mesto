@@ -105,11 +105,6 @@ function addPlaceFromArr(item) {
     .addEventListener("click", deleteGalleryItem);
 }
 
-//ФУНКЦИЯ открытие окна попапа для добавления фото
-function addClassPopupVisibleForAddPhoto() {
-  popupEditProfile.classList.add("popup_visible");
-}
-
 //ФУНКЦИЯ добавления карточки галереи на страницу
 
 function addNewPlace(evt) {
@@ -132,6 +127,7 @@ function deleteGalleryItem(evt) {
 
 // ФУНКЦИЯ открытия большой фотографии
 function openBigGalleryItem(evt) {
+  popupBigPhoto.classList.add("popup_opacity_slow-grow");
   popupBigPhoto.classList.add("popup_visible");
   const currentSrc = evt.target.getAttribute("src");
   const currentPhotoName = evt.target.getAttribute("alt");
@@ -143,12 +139,23 @@ function openBigGalleryItem(evt) {
 
 //ФУНКЦИЯ закрытия окна попапа редактирования профиля
 function closePopupEditProfile() {
-  popupEditProfile.classList.remove("popup_visible");
+  popupEditProfile.classList.add("popup_opacity_slow-damp");
+  setTimeout(function () {
+    popupEditProfile.classList.remove("popup_visible");
+    popupEditProfile.classList.remove("popup_opacity_slow-damp");
+    popupEditProfile.classList.remove("popup_opacity_slow-grow");
+  }, 800);
 }
 //ФУНКЦИЯ закрытия окна попапа добавления фотографий
 function closepopupAddPhoto() {
-  popupAddPhoto.classList.remove("popup_visible");
+  popupAddPhoto.classList.add("popup_opacity_slow-damp");
+  setTimeout(function () {
+    popupAddPhoto.classList.remove("popup_visible");
+    popupAddPhoto.classList.remove("popup_opacity_slow-damp");
+    popupAddPhoto.classList.remove("popup_opacity_slow-grow");
+  }, 800);
 }
+// ФУНКЦИЯ закрытия больш
 
 // ФУНКЦИЯ отправки формы профиля юзера
 function handleFormSubmit(evt) {
@@ -168,10 +175,12 @@ function changeLikeButton(evt) {
 editProfileButton.addEventListener("click", function () {
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
+  popupEditProfile.classList.add("popup_opacity_slow-grow");
   popupEditProfile.classList.add("popup_visible");
 });
 // добавление фотографий
 addPhotoButton.addEventListener("click", function () {
+  popupAddPhoto.classList.add("popup_opacity_slow-grow");
   popupAddPhoto.classList.add("popup_visible");
 });
 formInputAddPhoto.addEventListener("submit", addNewPlace);
@@ -184,6 +193,11 @@ formInputEditProfile.addEventListener("submit", handleFormSubmit);
 closePopupAddPhotoButton.addEventListener("click", closepopupAddPhoto);
 // закрытие попапа большой фотографии
 closePopupBigPhotoButton.addEventListener("click", function () {
-  popupBigPhoto.classList.remove("popup_visible");
+  popupBigPhoto.classList.add("popup_opacity_slow_damp");
+  setTimeout(function () {
+    popupBigPhoto.classList.remove("popup_visible");
+    popupBigPhoto.classList.remove("popup_opacity_slow-damp");
+    popupBigPhoto.classList.remove("popup_opacity_slow-grow");
+  }, 800);
 });
 galleryArray.forEach(addPlaceFromArr);
