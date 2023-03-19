@@ -1,37 +1,11 @@
 // ОБЪЯВДЕНИЕ ПЕРЕМЕННЫХ
 // массив с картинками для галереи
-const galleryArray = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
 // ТЕМПЛЕЙТЫ
 const galleryItemTemplate = document.querySelector(
   ".gallery-item-template"
 ).content;
-const galleryList = document.querySelector(".gallery__list");
+const galleryContainer = document.querySelector(".gallery__list");
 // попапы
 const popupEditProfile = document.querySelector(".popup-edit-profile");
 const popupAddPhoto = document.querySelector(".popup-add-photo");
@@ -40,15 +14,12 @@ const popupBigPhoto = document.querySelector(".popup-big-photo");
 const editProfileButton = document.querySelector(
   ".profile__edit-profile-button"
 );
-const closePopupEditProfileButton = popupEditProfile.querySelector(
-  ".popup__close-button"
-);
-const closePopupAddPhotoButton = popupAddPhoto.querySelector(
-  ".popup__close-button"
-);
-const closePopupBigPhotoButton = popupBigPhoto.querySelector(
-  ".popup__close-button"
-);
+
+document.querySelectorAll(".popup__close-button").forEach((button) => {
+  const buttonsPopup = button.closest(".popup");
+  button.addEventListener("click", () => closePopupSlowly(buttonsPopup));
+});
+
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
 
 // увеличенное фото в попапе
@@ -82,27 +53,34 @@ const userName = document.querySelector(".profile__user-name");
 const userProfession = document.querySelector(".profile__user-profession");
 
 //ФУНКЦИЯ создания карточки
-function addPlaceFromArr(item) {
+function renderCard(item) {
   const galleryElement = galleryItemTemplate
     .querySelector(".gallery__item")
     .cloneNode(true);
-  galleryElement.querySelector(".gallery__image").src = item.link;
-  galleryElement.querySelector(".gallery__image").alt = item.name;
-  galleryElement.querySelector(".gallery__city").textContent = item.name;
-  galleryList.prepend(galleryElement);
-  galleryElement
-    .querySelector(".gallery__image")
-    .addEventListener("click", openBigGalleryItem);
+  const galeryImage = galleryElement.querySelector(".gallery__image");
+  const galeryCaption = galleryElement.querySelector(".gallery__city");
+  galeryImage.src = item.link;
+  galeryImage.alt = item.name;
+  galeryCaption.textContent = item.name;
+  galeryImage.addEventListener("click", () =>
+    openBigGalleryItem(item.link, item.name)
+  );
   galleryElement
     .querySelector(".gallery__like-button")
     .addEventListener("click", changeLikeButton);
   galleryElement
     .querySelector(".gallery__bin-button")
     .addEventListener("click", deleteGalleryItem);
+  return galleryElement;
+}
+
+// ФУНКЦИЯ добавления карточек в галерею
+function addNewGalleryCard(item) {
+  galleryContainer.prepend(renderCard(item));
 }
 
 // создание карточек из массива
-galleryArray.forEach(addPlaceFromArr);
+galleryArray.forEach(addNewGalleryCard);
 
 //ФУНКЦИЯ добавления нового места в галереи
 function addNewPlace(evt) {
@@ -110,8 +88,7 @@ function addNewPlace(evt) {
   const newGalleryItem = {};
   newGalleryItem.name = formInputPlace.value;
   newGalleryItem.link = formInputPlaceLink.value;
-  galleryArray.push(newGalleryItem);
-  addPlaceFromArr(newGalleryItem);
+  addNewGalleryCard(newGalleryItem);
   closePopupSlowly(popupAddPhoto);
   formInputPlace.value = "";
   formInputPlaceLink.value = "";
@@ -124,12 +101,11 @@ function deleteGalleryItem(evt) {
 }
 
 // ФУНКЦИЯ открытия большой фотографии
-function openBigGalleryItem(evt) {
+function openBigGalleryItem(link, name) {
   openPopupSlowly(popupBigPhoto);
-  popupBigPohotoImage.src = evt.target.getAttribute("src");
-  popupBigPohotoImage.alt = evt.target.getAttribute("alt");
-  popupBigPohotoImage.nextElementSibling.textContent =
-    evt.target.nextElementSibling.textContent;
+  popupBigPohotoImage.src = link;
+  popupBigPohotoImage.alt = name;
+  popupBigPhotoDescription.textContent = name;
 }
 
 //ФКНКЦИЯ медленного открытия
@@ -175,17 +151,3 @@ addPhotoButton.addEventListener("click", function () {
   openPopupSlowly(popupAddPhoto);
 });
 formInputAddPhoto.addEventListener("submit", addNewPlace);
-
-// закрытие попапа редактирования профиля
-closePopupEditProfileButton.addEventListener("click", function () {
-  closePopupSlowly(popupEditProfile);
-});
-formInputEditProfile.addEventListener("submit", handleFormSubmit);
-// закрытие попапа добаления фотографий
-closePopupAddPhotoButton.addEventListener("click", function () {
-  closePopupSlowly(popupAddPhoto);
-});
-// закрытие попапа большой фотографии
-closePopupBigPhotoButton.addEventListener("click", function () {
-  closePopupSlowly(popupBigPhoto);
-});
