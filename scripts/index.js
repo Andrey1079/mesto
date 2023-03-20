@@ -64,7 +64,7 @@ function renderCard(item) {
 function addNewGalleryCard(item) {
   galleryContainer.prepend(renderCard(item));
 }
-//ФУНКЦИЯ добавления нового места в галереи
+//ФУНКЦИЯ cоздания объекта галереи
 function addNewPlace(evt) {
   evt.preventDefault();
   const newGalleryItem = {};
