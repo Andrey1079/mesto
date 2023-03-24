@@ -44,6 +44,10 @@ function renderCard(item) {
   const galleryElement = galleryItemTemplate
     .querySelector(".gallery__item")
     .cloneNode(true);
+  const galleryLikeButton = galleryElement.querySelector(
+    ".gallery__like-button"
+  );
+  const galleryBin = galleryElement.querySelector(".gallery__bin-button");
   const galeryImage = galleryElement.querySelector(".gallery__image");
   const galeryCaption = galleryElement.querySelector(".gallery__city");
   galeryImage.src = item.link;
@@ -52,12 +56,12 @@ function renderCard(item) {
   galeryImage.addEventListener("click", () =>
     openBigGalleryItem(item.link, item.name)
   );
-  galleryElement
-    .querySelector(".gallery__like-button")
-    .addEventListener("click", changeLikeButton);
-  galleryElement
-    .querySelector(".gallery__bin-button")
-    .addEventListener("click", deleteGalleryItem);
+
+  galleryLikeButton.addEventListener("click", () =>
+    changeLikeButton(galleryLikeButton)
+  );
+
+  galleryBin.addEventListener("click", () => deleteGalleryItem(galleryElement));
   return galleryElement;
 }
 // ФУНКЦИЯ добавления карточек в галерею
@@ -72,13 +76,11 @@ function addNewPlace(evt) {
   newGalleryItem.link = formInputPlaceLink.value;
   addNewGalleryCard(newGalleryItem);
   closePopup(popupAddPhoto);
-  formInputPlace.value = "";
-  formInputPlaceLink.value = "";
+  formInputAddPhoto.reset();
 }
 // ФУНКЦИЯ удаления места из галлереи
-function deleteGalleryItem(evt) {
-  const deletedGalleryItem = evt.target.closest(".gallery__item");
-  deletedGalleryItem.remove();
+function deleteGalleryItem(item) {
+  item.remove();
 }
 // ФУНКЦИЯ открытия большой фотографии
 function openBigGalleryItem(link, name) {
@@ -107,8 +109,8 @@ function editProfile(evt) {
 }
 
 // ФУНКЦИЯ установки лайка
-function changeLikeButton(evt) {
-  evt.target.classList.toggle("gallery__like-button_active");
+function changeLikeButton(item) {
+  item.classList.toggle("gallery__like-button_active");
 }
 //                                                            -----СОБЫТИЯ-----
 
