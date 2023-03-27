@@ -1,5 +1,5 @@
 //                                                            -----ОБЪЯВДЕНИЕ ПЕРЕМЕННЫХ-----
-
+const allClosePopupButtons = document.querySelectorAll(".popup__close-button");
 //---Редактирование профиля---
 const popupEditProfile = document.querySelector(".popup-edit-profile"); //попап редактирования профиля
 const editProfileButton = document.querySelector(
@@ -15,6 +15,8 @@ const formInputUserProfession = formInputEditProfile.querySelector(
 ); //поле ввода профессии пользователя
 const userName = document.querySelector(".profile__user-name"); //значение имени пользователя
 const userProfession = document.querySelector(".profile__user-profession"); //значение профессии пользователя
+
+formInputEditProfile.addEventListener("keydown", (evt) => console.log(evt.key));
 
 //---Галерея---
 const popupAddPhoto = document.querySelector(".popup-add-photo"); //попап добавления карточки в галерею
@@ -93,11 +95,22 @@ function openBigGalleryItem(link, name) {
 //ФКНКЦИЯ медленного открытия
 function openPopup(item) {
   item.classList.add("popup_visible");
+  item.addEventListener("click", closePopupByClickOverlay);
+  document.addEventListener("keydown", checkPushEscape, item);
+}
+
+// ФУНКЦИЯ ПРОВЕРКИ НАЖАТИЯ ESCAPE
+function checkPushEscape(evt) {
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector(".popup_visible"));
+  }
 }
 
 // ФУНКЦИЯ медленного закрытия
 function closePopup(item) {
   item.classList.remove("popup_visible");
+  item.addEventListener("click", closePopupByClickOverlay);
+  document.removeEventListener("keydown", checkPushEscape);
 }
 
 // ФУНКЦИЯ отправки формы профиля юзера
@@ -112,6 +125,13 @@ function editProfile(evt) {
 function changeLikeButton(item) {
   item.classList.toggle("gallery__like-button_active");
 }
+// функция обработки клика по оверлэю
+function closePopupByClickOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.currentTarget);
+  }
+}
+
 //                                                            -----СОБЫТИЯ-----
 
 editProfileButton.addEventListener("click", function () {
@@ -125,7 +145,7 @@ addPhotoButton.addEventListener("click", function () {
 }); // слушает нажатие кнопки добавления фотографии и открывает попап добавления фотографии
 formInputEditProfile.addEventListener("submit", editProfile); //слушает нажатие кнопки добавить фото и добавляет фото в галерею
 formInputAddPhoto.addEventListener("submit", addNewPlace); //слушает нажатие кнопки добавить фото и добавляет фото в галерею
-document.querySelectorAll(".popup__close-button").forEach((button) => {
+allClosePopupButtons.forEach((button) => {
   const buttonsPopup = button.closest(".popup");
   button.addEventListener("click", () => closePopup(buttonsPopup));
 }); //перебирает все кнопки закрытия попапов и навешивает на них слушатели
