@@ -46,16 +46,11 @@ function renderCard(item) {
   const galleryElement = galleryItemTemplate
     .querySelector(".gallery__item")
     .cloneNode(true);
-  const galleryBin = galleryElement.querySelector(".gallery__bin-button");
   const galeryImage = galleryElement.querySelector(".gallery__image");
   const galeryCaption = galleryElement.querySelector(".gallery__city");
   galeryImage.src = item.link;
   galeryImage.alt = item.name;
   galeryCaption.textContent = item.name;
-  galeryImage.addEventListener("click", () =>
-    openBigGalleryItem(item.link, item.name)
-  );
-  galleryBin.addEventListener("click", () => deleteGalleryItem(galleryElement));
   return galleryElement;
 }
 
@@ -145,6 +140,15 @@ allClosePopupButtons.forEach((button) => {
 galleryContainer.addEventListener("click", (evt) => {
   if (evt.target.classList.contains("gallery__like-button")) {
     changeLikeButton(evt.target);
+  }
+  if (evt.target.classList.contains("gallery__bin-button")) {
+    deleteGalleryItem(evt.target.closest(".gallery__item"));
+  }
+  if (evt.target.classList.contains("gallery__image")) {
+    const link = evt.target.src;
+    const capture = evt.target.alt;
+
+    openBigGalleryItem(link, capture);
   }
 });
 //                                                            -----ФОРМИРОВАНИЕ ГАЛЕРЕИ ИЗ МАССИВА-----
