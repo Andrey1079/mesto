@@ -46,9 +46,6 @@ function renderCard(item) {
   const galleryElement = galleryItemTemplate
     .querySelector(".gallery__item")
     .cloneNode(true);
-  const galleryLikeButton = galleryElement.querySelector(
-    ".gallery__like-button"
-  );
   const galleryBin = galleryElement.querySelector(".gallery__bin-button");
   const galeryImage = galleryElement.querySelector(".gallery__image");
   const galeryCaption = galleryElement.querySelector(".gallery__city");
@@ -58,14 +55,10 @@ function renderCard(item) {
   galeryImage.addEventListener("click", () =>
     openBigGalleryItem(item.link, item.name)
   );
-
-  galleryLikeButton.addEventListener("click", () =>
-    changeLikeButton(galleryLikeButton)
-  );
-
   galleryBin.addEventListener("click", () => deleteGalleryItem(galleryElement));
   return galleryElement;
 }
+
 // ФУНКЦИЯ добавления карточек в галерею
 function addNewGalleryCard(item) {
   galleryContainer.prepend(renderCard(item));
@@ -149,6 +142,10 @@ allClosePopupButtons.forEach((button) => {
   const buttonsPopup = button.closest(".popup");
   button.addEventListener("click", () => closePopup(buttonsPopup));
 }); //перебирает все кнопки закрытия попапов и навешивает на них слушатели
-
+galleryContainer.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("gallery__like-button")) {
+    changeLikeButton(evt.target);
+  }
+});
 //                                                            -----ФОРМИРОВАНИЕ ГАЛЕРЕИ ИЗ МАССИВА-----
 galleryArray.forEach(addNewGalleryCard);
