@@ -84,7 +84,7 @@ function checkPushEscape(evt) {
 }
 function closePopup(item) {
   item.classList.remove("popup_visible");
-  item.addEventListener("click", closePopupByClickOverlay);
+  item.removeEventListener("click", closePopupByClickOverlay);
   document.removeEventListener("keydown", checkPushEscape);
 }
 function editProfile(evt) {
