@@ -7,12 +7,9 @@
   color: #000000;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 29px 36px 0 36px;
+  margin: 0 36px 0 36px;
   padding: 5px 0 10px 0;
-}
-
-.popup__form-item:first-child {
-  margin-top: 0;
+  box-sizing: border-box;
 }
 
 /* styles for 320-527 */
@@ -20,4 +17,12 @@
   .popup__form-item {
     margin: 30px 22px 0 22px;
   }
+}
+
+.popup__form-item:focus {
+  outline: 2px solid rgba(68, 143, 214, 0.5);
+  border-radius: 2px;
+}
+.popup__form-item:invalid {
+  border-bottom: 1px solid #ff0000;
 }
