@@ -1,7 +1,0 @@
-.gallery__image-container {
-  position: relative;
-  width: 100%;
-  padding-top: 100%;
-  overflow: hidden;
-  grid-column: 1/3;
-}

@@ -59,12 +59,16 @@
       <!-- END FOOTER -->
     </div>
 
-    <!-- START POPUP WINDOW -->
+    <!-- START POPUP EDIT PROFILE-->
     <div class="popup popup-edit-profile">
       <div class="popup__card">
         <button type="button" class="popup__close-button button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="popup-info" class="popup__form" novalidate>
+        <form
+          name="popup-info"
+          class="popup__form popup__form_type_edit-profile"
+          novalidate
+        >
           <input
             class="popup__form-item popup__form-item_type_name"
             type="text"
@@ -95,14 +99,18 @@
         </form>
       </div>
     </div>
-    <!-- END POPUP WINDOW -->
+    <!-- END POPUP EDIT PROFILE-->
 
     <!-- START POPUP FOR ADD PHOTO -->
     <div class="popup popup-add-photo">
       <div class="popup__card">
         <button type="button" class="popup__close-button button"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form name="popup-info" class="popup__form" novalidate>
+        <form
+          name="popup-info"
+          class="popup__form popup__form_type_add-photo"
+          novalidate
+        >
           <input
             class="popup__form-item popup__form-item_type_place"
             type="text"
