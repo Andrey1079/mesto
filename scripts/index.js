@@ -85,7 +85,6 @@ function addNewPlace(evt) {
   newGalleryItem.link = formInputPlaceLink.value;
   addNewGalleryCard(newGalleryItem);
   closePopup(popupAddPhoto);
-  formAddPhoto.reset();
 }
 // удалить карточку галлереи
 function deleteGalleryItem(item) {
@@ -115,6 +114,7 @@ function closePopup(item) {
   item.classList.remove("popup_visible");
   item.removeEventListener("click", closePopupByClickOverlay);
   document.removeEventListener("keydown", checkPushEscape);
+  formAddPhoto.reset();
 }
 // редактирование профиля
 function editProfile(evt) {
