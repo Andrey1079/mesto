@@ -114,7 +114,6 @@ function closePopup(item) {
   item.classList.remove("popup_visible");
   item.removeEventListener("click", closePopupByClickOverlay);
   document.removeEventListener("keydown", checkPushEscape);
-  formAddPhoto.reset();
 }
 // редактирование профиля
 function editProfile(evt) {
@@ -145,6 +144,7 @@ editProfileButton.addEventListener("click", function () {
 });
 // кнопка добавления фото
 addPhotoButton.addEventListener("click", function () {
+  formAddPhoto.reset();
   openPopup(popupAddPhoto);
 });
 // кнопка submit редактирования профиля
