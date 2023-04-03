@@ -5,6 +5,7 @@ const settings = {
   submitButtonSelector: ".popup__submit-button",
   inactiveButtonClass: "popup__submit-button_disabled",
   errorClass: "popup__form-item-error_visible",
+  inputErrorClass: ".popup__form-item-error",
 };
 // находим формы и отменяем действия по умолчанию
 function enableValidation({ formSelector, ...set }) {
@@ -15,21 +16,13 @@ function enableValidation({ formSelector, ...set }) {
 }
 enableValidation(settings);
 // слушатели полей на ввод + проверка валидности формы
-function setEventListener(
-  form,
-  { inputSelector, submitButtonSelector, inactiveButtonClass, ...set }
-) {
+function setEventListener(form, { inputSelector, ...set }) {
   const inputs = Array.from(form.querySelectorAll(inputSelector));
-  toggleButtonState(form, inputs, submitButtonSelector, inactiveButtonClass);
+  toggleButtonState(form, inputs, set);
   inputs.forEach((input) => {
     addEventListener("input", () => {
       checkInputValidity(form, input, set);
-      toggleButtonState(
-        form,
-        inputs,
-        submitButtonSelector,
-        inactiveButtonClass
-      );
+      toggleButtonState(form, inputs, set);
     });
   });
 }
@@ -52,22 +45,25 @@ function hideInputError(messageError, errorClass) {
   messageError.classList.remove(errorClass);
 }
 // состояние кнопки submit
-function toggleButtonState(
-  form,
-  inputs,
-  submitButtonSelector,
-  inactiveButtonClass
-) {
+function toggleButtonState(form, inputs, { submitButtonSelector, ...set }) {
   const submitButton = form.querySelector(submitButtonSelector);
   if (hasInvalidInput(inputs)) {
-    submitButton.classList.add(inactiveButtonClass);
-    submitButton.setAttribute("disabled", "disabled");
+    disableSubmitButton(submitButton, set);
   } else {
-    submitButton.classList.remove(inactiveButtonClass);
-    submitButton.removeAttribute("disabled", "disabled");
+    enableSubmitButton(submitButton, set);
   }
 }
 // проверка валидности формы
 function hasInvalidInput(inputs) {
   return inputs.some((input) => !input.validity.valid);
+}
+// деактивация submit
+function disableSubmitButton(submitButton, { inactiveButtonClass }) {
+  submitButton.classList.add(inactiveButtonClass);
+  submitButton.setAttribute("disabled", "disabled");
+}
+// активация submit
+function enableSubmitButton(submitButton, { inactiveButtonClass }) {
+  submitButton.classList.remove(inactiveButtonClass);
+  submitButton.removeAttribute("disabled", "disabled");
 }

@@ -65,25 +65,34 @@ function createCard(item) {
   const gallerylikeButton = galleryElement.querySelector(
     ".gallery__like-button"
   );
+  const galleryTrashButton = galleryElement.querySelector(
+    ".gallery__bin-button"
+  );
   galeryImage.src = item.link;
   galeryImage.alt = item.name;
   galeryCaption.textContent = item.name;
   gallerylikeButton.addEventListener("click", (evt) =>
     changeLikeButton(evt.target)
   );
+  galleryTrashButton.addEventListener("click", (evt) => {
+    deleteGalleryItem(evt.target.closest(".gallery__item"));
+  });
+  galeryImage.addEventListener("click", (evt) => {
+    openBigGalleryItem(galeryImage.src, galeryImage.alt);
+  });
   return galleryElement;
 }
 // добавить карточку в HTML
-function addNewGalleryCard(item) {
-  galleryContainer.prepend(createCard(item));
+function addNewGalleryCard(item, gallery) {
+  gallery.prepend(createCard(item));
 }
-galleryArray.forEach(addNewGalleryCard);
+galleryArray.forEach((card) => addNewGalleryCard(card, galleryContainer));
 // создать карточку галлереи
 function addNewPlace(evt) {
   const newGalleryItem = {};
   newGalleryItem.name = formInputPlace.value;
   newGalleryItem.link = formInputPlaceLink.value;
-  addNewGalleryCard(newGalleryItem);
+  addNewGalleryCard(newGalleryItem, galleryContainer);
   closePopup(popupAddPhoto);
 }
 // удалить карточку галлереи
@@ -137,14 +146,27 @@ function closePopupByClickOverlay(evt) {
 editProfileButton.addEventListener("click", function () {
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
-  popupEditProfile
-    .querySelectorAll(".popup__form-item-error")
-    .forEach((item) => item.classList.remove("popup__form-item-error_visible"));
+  disableSubmitButton(
+    popupEditProfile.querySelector(".popup__submit-button"),
+    settings
+  );
+  Array.from(
+    popupEditProfile.querySelectorAll(settings.inputErrorClass)
+  ).forEach((errorMessage) =>
+    hideInputError(errorMessage, settings.errorClass)
+  );
   openPopup(popupEditProfile);
 });
 // кнопка добавления фото
 addPhotoButton.addEventListener("click", function () {
   formAddPhoto.reset();
+  disableSubmitButton(
+    popupAddPhoto.querySelector(".popup__submit-button"),
+    settings
+  );
+  Array.from(popupAddPhoto.querySelectorAll(settings.inputErrorClass)).forEach(
+    (errorMessage) => hideInputError(errorMessage, settings.errorClass)
+  );
   openPopup(popupAddPhoto);
 });
 // кнопка submit редактирования профиля
@@ -152,24 +174,9 @@ formEditProfile.addEventListener("submit", editProfile);
 // кнопка submit добавления фото
 formAddPhoto.addEventListener("submit", () => {
   addNewPlace();
-  popupAddPhoto
-    .querySelector(".popup__submit-button")
-    .classList.add("popup__submit-button_disabled");
 });
 // кнопки закрытия попапов
 allClosePopupButtons.forEach((button) => {
   const buttonsPopup = button.closest(".popup");
   button.addEventListener("click", () => closePopup(buttonsPopup));
-});
-// открытие большого фото и удаление фото
-galleryContainer.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("gallery__bin-button")) {
-    deleteGalleryItem(evt.target.closest(".gallery__item"));
-  }
-  if (evt.target.classList.contains("gallery__image")) {
-    const link = evt.target.src;
-    const capture = evt.target.alt;
-
-    openBigGalleryItem(link, capture);
-  }
 });
