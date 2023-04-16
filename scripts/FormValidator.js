@@ -28,7 +28,6 @@ class FormValidator {
     this._toggleButtonState(inputs);
     inputs.forEach((input) => {
       addEventListener("input", () => {
-        console.log("asdfa");
         this._checkInputValidity(this._formElement, input);
         this._toggleButtonState(inputs);
       });
