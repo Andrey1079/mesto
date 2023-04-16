@@ -146,27 +146,27 @@ function closePopupByClickOverlay(evt) {
 editProfileButton.addEventListener("click", function () {
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
-  disableSubmitButton(
-    popupEditProfile.querySelector(".popup__submit-button"),
-    settings
-  );
-  Array.from(
-    popupEditProfile.querySelectorAll(settings.inputErrorClass)
-  ).forEach((errorMessage) =>
-    hideInputError(errorMessage, settings.errorClass)
-  );
+  // disableSubmitButton(
+  //   popupEditProfile.querySelector(".popup__submit-button"),
+  //   settings
+  // );
+  // Array.from(
+  //   popupEditProfile.querySelectorAll(settings.inputErrorClass)
+  // ).forEach((errorMessage) =>
+  //   // hideInputError(errorMessage, settings.errorClass)
+  // );
   openPopup(popupEditProfile);
 });
 // кнопка добавления фото
 addPhotoButton.addEventListener("click", function () {
   formAddPhoto.reset();
-  disableSubmitButton(
-    popupAddPhoto.querySelector(".popup__submit-button"),
-    settings
-  );
-  Array.from(popupAddPhoto.querySelectorAll(settings.inputErrorClass)).forEach(
-    (errorMessage) => hideInputError(errorMessage, settings.errorClass)
-  );
+  // disableSubmitButton(
+  //   popupAddPhoto.querySelector(".popup__submit-button"),
+  //   settings
+  // );
+  // Array.from(popupAddPhoto.querySelectorAll(settings.inputErrorClass)).forEach(
+  //   (errorMessage) => hideInputError(errorMessage, settings.errorClass)
+  // );
   openPopup(popupAddPhoto);
 });
 // кнопка submit редактирования профиля
