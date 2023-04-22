@@ -1,11 +1,5 @@
-import {
-  openPopup,
-  popupBigPhoto,
-  popupBigPohotoImage,
-  popupBigPhotoDescription,
-} from "./index.js";
 export default class Card {
-  constructor(card, galleryItemTemplate) {
+  constructor(card, galleryItemTemplate, openPopupFunc) {
     this._galleryItemTemplate = document
       .querySelector(galleryItemTemplate)
       .content.cloneNode(true);
@@ -23,6 +17,7 @@ export default class Card {
       this._galleryItemTemplate.querySelector(".gallery__item");
     this._caption = card.name;
     this._url = card.link;
+    this.openPopupFunc = openPopupFunc;
   }
 
   createCard() {
@@ -36,7 +31,7 @@ export default class Card {
       this._deleteGalleryItem(this._galleryItemTemplate);
     });
     this._galeryImage.addEventListener("click", (evt) => {
-      this._openBigGalleryItem(this._galeryImage.src, this._galeryImage.alt);
+      this.openPopupFunc(this._galeryImage.src, this._galeryImage.alt);
     });
     return this._galleryItemTemplate;
   }
@@ -46,11 +41,6 @@ export default class Card {
   }
   _deleteGalleryItem() {
     this._galleryItem.remove();
-  }
-  _openBigGalleryItem(link, name) {
-    openPopup(popupBigPhoto);
-    popupBigPohotoImage.src = link;
-    popupBigPohotoImage.alt = name;
-    popupBigPhotoDescription.textContent = name;
+    this._galleryItem = null;
   }
 }
