@@ -23,7 +23,7 @@ const galleryItemTemplate = ".gallery-item-template";
 const galleryContainer = document.querySelector(".gallery__list");
 const popupAddPhoto = document.querySelector(".popup-add-photo");
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
-const forms = document.querySelectorAll(".popup__form");
+// const forms = document.querySelectorAll(".popup__form");
 const formAddPhoto = popupAddPhoto.querySelector(".popup__form_type_add-photo");
 const formInputPlace = formAddPhoto.querySelector(
   ".popup__form-item_type_place"
@@ -36,7 +36,6 @@ const popupBigPohotoImage = popupBigPhoto.querySelector(".popup__img");
 const popupBigPhotoDescription = popupBigPhoto.querySelector(
   ".popup__place-name-of-big-photo"
 );
-const validatorArr = [];
 
 //                                                            -----ФУНКЦИИ-----
 
@@ -97,17 +96,12 @@ function openBigGalleryItem(link, name) {
   popupBigPohotoImage.alt = name;
   popupBigPhotoDescription.textContent = name;
 }
-// очистка поля с ошибками в форме
-function hideErrorMessage() {
-  validatorArr.forEach((obj) => {
-    obj.resetInputs();
-  });
-}
+
 //                                                            -----СОБЫТИЯ-----
 // Кнопка редактирования профиля
 popupProfileButton.addEventListener("click", function () {
   formEditProfile.reset();
-  hideErrorMessage();
+  formProfileValidator.resetInputs();
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
 
@@ -116,7 +110,7 @@ popupProfileButton.addEventListener("click", function () {
 // кнопка добавления фото
 addPhotoButton.addEventListener("click", function () {
   formAddPhoto.reset();
-  hideErrorMessage();
+  formCardValidator.resetInputs();
   openPopup(popupAddPhoto);
 });
 // кнопка submit редактирования профиля
@@ -130,15 +124,15 @@ allClosePopupButtons.forEach((button) => {
   const buttonsPopup = button.closest(".popup");
   button.addEventListener("click", () => closePopup(buttonsPopup));
 });
+
+const formCardValidator = new FormValidator(settings, formAddPhoto);
+const formProfileValidator = new FormValidator(settings, formEditProfile);
+formCardValidator.enableValidation();
+formProfileValidator.enableValidation();
+
 export {
   openPopup,
   popupBigPhoto,
   popupBigPohotoImage,
   popupBigPhotoDescription,
 };
-
-Array.from(forms).forEach((form) => {
-  const validator = new FormValidator(settings, form);
-  validatorArr.push(validator);
-  validator.enableValidation();
-});

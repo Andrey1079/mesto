@@ -6,12 +6,15 @@ class FormValidator {
     this._submitButtonSelector = setObject.submitButtonSelector;
     this._inactiveButtonClass = setObject.inactiveButtonClass;
     this._errorClass = setObject.errorClass;
-    // this._inputErrorClass = setObject.inputErrorClass;
+    this._inputErrorClass = setObject.inputErrorClass;
     this._inputs = Array.from(
       this._formElement.querySelectorAll(this._inputSelector)
     );
     this._submitButton = this._formElement.querySelector(
       this._submitButtonSelector
+    );
+    this._errorMessages = Array.from(
+      this._formElement.querySelectorAll(this._inputErrorClass)
     );
   }
   enableValidation() {
@@ -42,6 +45,7 @@ class FormValidator {
   }
   _hideInputError(messageError) {
     messageError.classList.remove(this._errorClass);
+    messageError.textContent = "";
   }
   _disableSubmitButton(submitButton, inactiveButtonClass) {
     submitButton.classList.add(inactiveButtonClass);
@@ -63,9 +67,7 @@ class FormValidator {
   }
   resetInputs() {
     this._toggleButtonState();
-    Array.from(
-      this._formElement.querySelectorAll(this._inputErrorClass)
-    ).forEach((span) => {
+    this._errorMessages.forEach((span) => {
       this._hideInputError(span);
     });
   }
