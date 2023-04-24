@@ -101,7 +101,7 @@ function openBigGalleryItem(link, name) {
 // Кнопка редактирования профиля
 popupProfileButton.addEventListener("click", function () {
   formEditProfile.reset();
-  formProfileValidator.resetInputs();
+  formProfileValidator.resetInputsErrors();
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
 
@@ -110,7 +110,7 @@ popupProfileButton.addEventListener("click", function () {
 // кнопка добавления фото
 addPhotoButton.addEventListener("click", function () {
   formAddPhoto.reset();
-  formCardValidator.resetInputs();
+  formCardValidator.resetInputsErrors();
   openPopup(popupAddPhoto);
 });
 // кнопка submit редактирования профиля

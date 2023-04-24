@@ -65,7 +65,7 @@ class FormValidator {
   _hasInvalidInput() {
     return this._inputs.some((input) => !input.validity.valid);
   }
-  resetInputs() {
+  resetInputsErrors() {
     this._toggleButtonState();
     this._errorMessages.forEach((span) => {
       this._hideInputError(span);
