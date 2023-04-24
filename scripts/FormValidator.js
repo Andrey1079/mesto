@@ -6,7 +6,7 @@ class FormValidator {
     this._submitButtonSelector = setObject.submitButtonSelector;
     this._inactiveButtonClass = setObject.inactiveButtonClass;
     this._errorClass = setObject.errorClass;
-    this._inputErrorClass = setObject.inputErrorClass;
+    // this._inputErrorClass = setObject.inputErrorClass;
     this._inputs = Array.from(
       this._formElement.querySelectorAll(this._inputSelector)
     );
@@ -63,7 +63,6 @@ class FormValidator {
   }
   resetInputs() {
     this._toggleButtonState();
-    console.log(this._inputs);
     Array.from(
       this._formElement.querySelectorAll(this._inputErrorClass)
     ).forEach((span) => {
