@@ -1,6 +1,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-
+import Section from "./Section.js";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 
 const allClosePopupButtons = document.querySelectorAll(".popup__close-button");
@@ -20,7 +20,7 @@ const formInputUserProfession = formEditProfile.querySelector(
 const userName = document.querySelector(".profile__user-name");
 const userProfession = document.querySelector(".profile__user-profession");
 const galleryItemTemplate = ".gallery-item-template";
-const galleryContainer = document.querySelector(".gallery__list");
+// const galleryContainer = document.querySelector(".gallery__list");
 const popupAddPhoto = document.querySelector(".popup-add-photo");
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
 // const forms = document.querySelectorAll(".popup__form");
@@ -74,13 +74,29 @@ function closePopupByClickOverlay(evt) {
   }
 }
 // Добавить новое место в галерею
-function addNewGalleryCard(card) {
-  const galleryCard = new Card(card, galleryItemTemplate, openBigGalleryItem);
-  galleryContainer.prepend(galleryCard.createCard());
-}
-galleryArray.forEach((card) => {
-  addNewGalleryCard(card);
-});
+// function addNewGalleryCard(card) {
+//   const galleryCard = new Card(card, galleryItemTemplate, openBigGalleryItem);
+//   galleryContainer.prepend(galleryCard.createCard());
+// }
+// galleryArray.forEach((card) => {
+//   addNewGalleryCard(card);
+// });
+
+const gallery = new Section(
+  {
+    items: galleryArray,
+    renderer: (item) => {
+      const newGalleryCard = new Card(
+        item,
+        galleryItemTemplate,
+        openBigGalleryItem
+      );
+      gallery.additem(newGalleryCard.createCard());
+    },
+  },
+  ".gallery__list"
+);
+gallery.renderItemsFromArray();
 // Создать новую карточку галереи
 function addNewPlace() {
   const newGalleryItem = {};
