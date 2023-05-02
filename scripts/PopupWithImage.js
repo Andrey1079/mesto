@@ -5,7 +5,7 @@ export default class PopupWithImage extends Popup {
     super(popupSelector);
     this._popupImageSrc = data.src;
     this._popupImageAlt = data.alt;
-    this._popupImageCaption = data.caption;
+    this._popupImageCaption = data.alt;
     this._image = this._popup.querySelector(".popup__img");
     this._caption = this._popup.querySelector(
       ".popup__place-name-of-big-photo"

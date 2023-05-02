@@ -1,8 +1,10 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
-import Popup from "./Popup.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForms from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
+
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 
 const allClosePopupButtons = document.querySelectorAll(".popup__close-button");
@@ -56,7 +58,7 @@ const popupBigPhotoDescription = popupBigPhoto.querySelector(
 // }
 
 // Создать галлерею
-function careateGallery(array) {
+function createGallery(array) {
   const gallery = new Section(
     {
       items: array,
@@ -73,22 +75,20 @@ function careateGallery(array) {
   );
   gallery.renderItemsFromArray();
 }
-careateGallery(galleryArray);
-
+createGallery(galleryArray);
 // Создать новую карточку галереи
-function addNewPlace() {
-  const newGalleryItem = {};
-  newGalleryItem.name = formInputPlace.value;
-  newGalleryItem.link = formInputPlaceLink.value;
-  careateGallery([newGalleryItem]);
-  closePopup(popupAddPhoto);
-}
+// function addNewPlace() {
+//   const newGalleryItem = {};
+//   newGalleryItem.name = formInputPlace.value;
+//   newGalleryItem.link = formInputPlaceLink.value;
+//   createGallery([newGalleryItem]);
+//   closePopup(popupAddPhoto);
+// }
 // Открытие попапа с увеличенной фотографией
 function handleCardClick(link, name) {
   const popupWithImageObject = {};
   popupWithImageObject.src = link;
   popupWithImageObject.alt = name;
-  popupWithImageObject.caption = name;
   const popupWithImage = new PopupWithImage(
     { data: popupWithImageObject },
     ".popup-big-photo"
@@ -100,26 +100,19 @@ function handleCardClick(link, name) {
 //                                                            -----СОБЫТИЯ-----
 // Кнопка редактирования профиля
 popupProfileButton.addEventListener("click", () => {
-  formEditProfile.reset();
   formProfileValidator.resetInputsErrors();
+  const popupWithFormsEditProfile = new PopupWithForms();
   formInputUserName.value = userName.textContent;
   formInputUserProfession.value = userProfession.textContent;
   // popupEditProfile1.open();
 });
-// кнопка добавления фото
-addPhotoButton.addEventListener("click", function () {
-  // formAddPhoto.reset();
-  // formCardValidator.resetInputsErrors();
-  const popupWithImage = new Popup(".popup-add-photo");
-  popupWithImage.open();
-  popupWithImage.setEventListeners(addPhotoPopupCloseButton);
-});
+
 // кнопка submit редактирования профиля
-formEditProfile.addEventListener("submit", editProfile);
+// formEditProfile.addEventListener("submit", editProfile);
 // кнопка submit добавления фото
-formAddPhoto.addEventListener("submit", () => {
-  addNewPlace();
-});
+// formAddPhoto.addEventListener("submit", () => {
+//   addNewPlace();
+// });
 // кнопки закрытия попапов
 // allClosePopupButtons.forEach((button) => {
 //   const buttonsPopup = button.closest(".popup");
@@ -130,10 +123,20 @@ const formCardValidator = new FormValidator(settings, formAddPhoto);
 const formProfileValidator = new FormValidator(settings, formEditProfile);
 formCardValidator.enableValidation();
 formProfileValidator.enableValidation();
-
-export {
-  // openPopup,
-  popupBigPhoto,
-  popupBigPohotoImage,
-  popupBigPhotoDescription,
-};
+// кнопка добавления фото
+addPhotoButton.addEventListener("click", () => {
+  formCardValidator.resetInputsErrors();
+  const popupWithFormsAddPhoto = new PopupWithForms(
+    {
+      createObject: () => {
+        const newGalleryItem = {};
+        newGalleryItem.name = formInputPlace.value;
+        newGalleryItem.link = formInputPlaceLink.value;
+        createGallery([newGalleryItem]);
+      },
+    },
+    ".popup-add-photo"
+  );
+  popupWithFormsAddPhoto.open();
+  popupWithFormsAddPhoto.setEventListeners(addPhotoPopupCloseButton);
+});
