@@ -1,14 +1,21 @@
 export default class UserInfo {
   constructor({ userData }) {
-    this._userNameField = document.querySelector("data.userNameSelector");
-    this._userProffessionField = document.querySelector(
-      "data.userProffessionSelector"
+    this._userNameField = document.querySelector(userData.userNameSelector);
+    this._userProfessionField = document.querySelector(
+      userData.userProfessionSelector
     );
   }
   getUserInfo() {
     // возвращает объект с данными пользователя
+
+    this._userData = {};
+    this._userData.name = this._userNameField.textContent;
+    this._userData.profession = this._userProfessionField.textContent;
+    return this._userData;
   }
-  setUserInfo() {
-    // принимает объект с данными о пользователе и добавляет их в разметку
+
+  setUserInfo(userData) {
+    this._userNameField.textContent = userData.name;
+    this._userProfessionField.textContent = userData.profession;
   }
 }

@@ -7,9 +7,10 @@ import UserInfo from "./UserInfo.js";
 
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 
-const allClosePopupButtons = document.querySelectorAll(".popup__close-button");
-
 const popupEditProfile = document.querySelector(".popup-edit-profile");
+const editProfilePopupCloseButton = popupEditProfile.querySelector(
+  ".popup__close-button"
+);
 const popupProfileButton = document.querySelector(
   ".profile__edit-profile-button"
 );
@@ -22,68 +23,23 @@ const formInputUserName = formEditProfile.querySelector(
 const formInputUserProfession = formEditProfile.querySelector(
   ".popup__form-item_type_profession"
 );
-const userName = document.querySelector(".profile__user-name");
-const userProfession = document.querySelector(".profile__user-profession");
+const userData = {
+  userNameSelector: ".profile__user-name",
+  userProfessionSelector: ".profile__user-profession",
+};
 const galleryItemTemplate = ".gallery-item-template";
-// const galleryContainer = document.querySelector(".gallery__list");
 const popupAddPhoto = document.querySelector(".popup-add-photo");
 const addPhotoPopupCloseButton = popupAddPhoto.querySelector(
   ".popup__close-button"
 );
 const addPhotoButton = document.querySelector(".profile__add-photo-button");
-// const forms = document.querySelectorAll(".popup__form");
 const formAddPhoto = popupAddPhoto.querySelector(".popup__form_type_add-photo");
-const formInputPlace = formAddPhoto.querySelector(
-  ".popup__form-item_type_place"
-);
-const formInputPlaceLink = formAddPhoto.querySelector(
-  ".popup__form-item_type_img-link"
-);
 const popupBigPhoto = document.querySelector(".popup-big-photo");
 const popupBigPhotoCloseButton = popupBigPhoto.querySelector(
   ".popup__close-button"
 );
-const popupBigPohotoImage = popupBigPhoto.querySelector(".popup__img");
-const popupBigPhotoDescription = popupBigPhoto.querySelector(
-  ".popup__place-name-of-big-photo"
-);
 
 //                                                            -----ФУНКЦИИ-----
-
-// редактирование профиля
-// function editProfile(evt) {
-//   userName.textContent = formInputUserName.value;
-//   userProfession.textContent = formInputUserProfession.value;
-//   closePopup(popupEditProfile);
-// }
-
-// Создать галлерею
-function createGallery(array) {
-  const gallery = new Section(
-    {
-      items: array,
-      renderer: (item) => {
-        const newGalleryCard = new Card(
-          item,
-          galleryItemTemplate,
-          handleCardClick
-        );
-        gallery.additem(newGalleryCard.createCard());
-      },
-    },
-    ".gallery__list"
-  );
-  gallery.renderItemsFromArray();
-}
-createGallery(galleryArray);
-// Создать новую карточку галереи
-// function addNewPlace() {
-//   const newGalleryItem = {};
-//   newGalleryItem.name = formInputPlace.value;
-//   newGalleryItem.link = formInputPlaceLink.value;
-//   createGallery([newGalleryItem]);
-//   closePopup(popupAddPhoto);
-// }
 // Открытие попапа с увеличенной фотографией
 function handleCardClick(link, name) {
   const popupWithImageObject = {};
@@ -97,46 +53,82 @@ function handleCardClick(link, name) {
   popupWithImage.setEventListeners(popupBigPhotoCloseButton);
 }
 
-//                                                            -----СОБЫТИЯ-----
-// Кнопка редактирования профиля
-popupProfileButton.addEventListener("click", () => {
-  formProfileValidator.resetInputsErrors();
-  const popupWithFormsEditProfile = new PopupWithForms();
-  formInputUserName.value = userName.textContent;
-  formInputUserProfession.value = userProfession.textContent;
-  // popupEditProfile1.open();
-});
-
-// кнопка submit редактирования профиля
-// formEditProfile.addEventListener("submit", editProfile);
-// кнопка submit добавления фото
-// formAddPhoto.addEventListener("submit", () => {
-//   addNewPlace();
-// });
-// кнопки закрытия попапов
-// allClosePopupButtons.forEach((button) => {
-//   const buttonsPopup = button.closest(".popup");
-//   button.addEventListener("click", () => closePopup(buttonsPopup));
-// });
-
+//                                                          -----Объявление классов-----
+// валидация форм
 const formCardValidator = new FormValidator(settings, formAddPhoto);
 const formProfileValidator = new FormValidator(settings, formEditProfile);
 formCardValidator.enableValidation();
 formProfileValidator.enableValidation();
-// кнопка добавления фото
-addPhotoButton.addEventListener("click", () => {
-  formCardValidator.resetInputsErrors();
-  const popupWithFormsAddPhoto = new PopupWithForms(
-    {
-      createObject: () => {
-        const newGalleryItem = {};
-        newGalleryItem.name = formInputPlace.value;
-        newGalleryItem.link = formInputPlaceLink.value;
-        createGallery([newGalleryItem]);
-      },
+//
+//  галерея из массива
+const gallery = new Section(
+  {
+    items: galleryArray,
+    renderer: (item) => {
+      const newGalleryCard = new Card(
+        item,
+        galleryItemTemplate,
+        handleCardClick //функция открытия попапа с фото
+      );
+      gallery.addItem(newGalleryCard.createCard()); //добавляет объект класса card в разметку
     },
-    ".popup-add-photo"
-  );
+  },
+  ".gallery__list"
+);
+//
+// добавление карточки галереи
+const popupWithFormsAddPhoto = new PopupWithForms(
+  {
+    submitFunc: (formValues) => {
+      const gallery = new Section(
+        {
+          items: [formValues],
+          renderer: (item) => {
+            const newGalleryCard = new Card(
+              item,
+              galleryItemTemplate,
+              handleCardClick //функция открытия попапа с фото
+            );
+            gallery.addItem(newGalleryCard.createCard()); //добавляет объект класса card в разметку
+          },
+        },
+        ".gallery__list"
+      );
+      gallery.renderItemsFromArray();
+    },
+  },
+  ".popup-add-photo"
+);
+//
+// изменение данных о пользователе
+const popupWithFormsUserProfile = new PopupWithForms(
+  {
+    submitFunc: (formValues) => {
+      userInfo.setUserInfo(formValues);
+    },
+  },
+  ".popup-edit-profile"
+);
+//
+// управление данными о пользователе на странице
+const userInfo = new UserInfo({ userData: userData });
+gallery.renderItemsFromArray();
+//
+//                                                            -----СОБЫТИЯ-----
+
+// кнопка добавления фото
+addPhotoButton.addEventListener("click", (evt) => {
+  (evt) => evt.preventDefault();
+  formCardValidator.resetInputsErrors();
   popupWithFormsAddPhoto.open();
   popupWithFormsAddPhoto.setEventListeners(addPhotoPopupCloseButton);
+});
+//
+// кнопка редактирования профиля
+popupProfileButton.addEventListener("click", () => {
+  formProfileValidator.resetInputsErrors();
+  formInputUserName.value = userInfo.getUserInfo().name;
+  formInputUserProfession.value = userInfo.getUserInfo().profession;
+  popupWithFormsUserProfile.open();
+  popupWithFormsUserProfile.setEventListeners(editProfilePopupCloseButton);
 });
