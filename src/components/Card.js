@@ -21,9 +21,13 @@ export default class Card {
   }
 
   createCard() {
+    this._setEventLIsteners();
     this._galeryImage.src = this._url;
     this._galeryImage.alt = this._caption;
     this._galeryCaption.textContent = this._caption;
+    return this._galleryItemTemplate;
+  }
+  _setEventLIsteners() {
     this._gallerylikeButton.addEventListener("click", (evt) =>
       this._changeLikeButton(this._gallerylikeButton)
     );
@@ -33,7 +37,6 @@ export default class Card {
     this._galeryImage.addEventListener("click", (evt) => {
       this.openPopupFunc(this._galeryImage.src, this._galeryImage.alt);
     });
-    return this._galleryItemTemplate;
   }
 
   _changeLikeButton() {
