@@ -47,11 +47,8 @@ function handleCardClick(link, name) {
   const popupWithImageObject = {};
   popupWithImageObject.src = link;
   popupWithImageObject.alt = name;
-  const popupWithImage = new PopupWithImage(
-    { data: popupWithImageObject },
-    ".popup-big-photo"
-  );
-  popupWithImage.open();
+  const popupWithImage = new PopupWithImage(".popup-big-photo");
+  popupWithImage.open(popupWithImageObject);
   popupWithImage.setEventListeners(popupBigPhotoCloseButton);
 }
 

@@ -1,21 +1,21 @@
 import Popup from "./Popup.js";
-// import Section from "./Section.js";
+
 export default class PopupWithImage extends Popup {
-  constructor({ data }, popupSelector) {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._popupImageSrc = data.src;
-    this._popupImageAlt = data.alt;
-    this._popupImageCaption = data.alt;
+    // this._popupImageSrc = data.src;
+    // this._popupImageAlt = data.alt;
+    // this._popupImageCaption = data.alt;
     this._image = this._popup.querySelector(".popup__img");
     this._caption = this._popup.querySelector(
       ".popup__place-name-of-big-photo"
     );
   }
 
-  open() {
-    this._image.src = this._popupImageSrc;
-    this._image.alt = this._popupImageAlt;
-    this._caption.textContent = this._popupImageAlt;
+  open(imageData) {
+    this._image.src = imageData.src;
+    this._image.alt = imageData.alt;
+    this._caption.textContent = imageData.alt;
     super.open();
   }
 }
