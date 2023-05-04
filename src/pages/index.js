@@ -101,6 +101,7 @@ const popupWithFormsAddPhoto = new PopupWithForms(
   },
   ".popup-add-photo"
 );
+popupWithFormsAddPhoto.setEventListeners();
 //
 // изменение данных о пользователе
 const popupWithFormsUserProfile = new PopupWithForms(
@@ -111,6 +112,7 @@ const popupWithFormsUserProfile = new PopupWithForms(
   },
   ".popup-edit-profile"
 );
+popupWithFormsUserProfile.setEventListeners();
 //
 // управление данными о пользователе на странице
 const userInfo = new UserInfo({ userData: userData });
@@ -123,7 +125,6 @@ addPhotoButton.addEventListener("click", (evt) => {
   (evt) => evt.preventDefault();
   formCardValidator.resetInputsErrors();
   popupWithFormsAddPhoto.open();
-  popupWithFormsAddPhoto.setEventListeners(addPhotoPopupCloseButton);
 });
 //
 // кнопка редактирования профиля
@@ -132,5 +133,4 @@ popupProfileButton.addEventListener("click", () => {
   formInputUserName.value = userInfo.getUserInfo().name;
   formInputUserProfession.value = userInfo.getUserInfo().profession;
   popupWithFormsUserProfile.open();
-  popupWithFormsUserProfile.setEventListeners(editProfilePopupCloseButton);
 });
