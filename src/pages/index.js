@@ -4,42 +4,18 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForms from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import { galleryArray } from "../utils/constants.js";
-import { settings } from "../utils/constants.js";
+import {
+  settings,
+  galleryArray,
+  popupProfileButton,
+  formEditProfile,
+  userData,
+  galleryItemTemplate,
+  addPhotoButton,
+  formAddPhoto,
+} from "../utils/constants.js";
 import "./index.css";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
-
-const popupEditProfile = document.querySelector(".popup-edit-profile");
-const editProfilePopupCloseButton = popupEditProfile.querySelector(
-  ".popup__close-button"
-);
-const popupProfileButton = document.querySelector(
-  ".profile__edit-profile-button"
-);
-const formEditProfile = popupEditProfile.querySelector(
-  ".popup__form_type_edit-profile"
-);
-const formInputUserName = formEditProfile.querySelector(
-  ".popup__form-item_type_name"
-);
-const formInputUserProfession = formEditProfile.querySelector(
-  ".popup__form-item_type_profession"
-);
-const userData = {
-  userNameSelector: ".profile__user-name",
-  userProfessionSelector: ".profile__user-profession",
-};
-const galleryItemTemplate = ".gallery-item-template";
-const popupAddPhoto = document.querySelector(".popup-add-photo");
-const addPhotoPopupCloseButton = popupAddPhoto.querySelector(
-  ".popup__close-button"
-);
-const addPhotoButton = document.querySelector(".profile__add-photo-button");
-const formAddPhoto = popupAddPhoto.querySelector(".popup__form_type_add-photo");
-const popupBigPhoto = document.querySelector(".popup-big-photo");
-const popupBigPhotoCloseButton = popupBigPhoto.querySelector(
-  ".popup__close-button"
-);
 
 //                                                            -----ФУНКЦИИ-----
 // Открытие попапа с увеличенной фотографией
@@ -115,7 +91,6 @@ addPhotoButton.addEventListener("click", (evt) => {
 // кнопка редактирования профиля
 popupProfileButton.addEventListener("click", () => {
   formProfileValidator.resetInputsErrors();
-  formInputUserName.value = userInfo.getUserInfo().name;
-  formInputUserProfession.value = userInfo.getUserInfo().profession;
+  popupWithFormsUserProfile.setInputValues(userInfo.getUserInfo());
   popupWithFormsUserProfile.open();
 });

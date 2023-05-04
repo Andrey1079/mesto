@@ -1,4 +1,4 @@
-const galleryArray = [
+export const galleryArray = [
   {
     name: "Архыз",
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
@@ -24,7 +24,7 @@ const galleryArray = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
-const settings = {
+export const settings = {
   formSelector: ".popup__form",
   inputSelector: ".popup__form-item",
   submitButtonSelector: ".popup__submit-button",
@@ -32,5 +32,23 @@ const settings = {
   errorClass: "popup__form-item-error_visible",
   inputErrorClass: ".popup__form-item-error",
 };
-export { settings };
-export { galleryArray };
+export const popupEditProfile = document.querySelector(".popup-edit-profile");
+export const popupProfileButton = document.querySelector(
+  ".profile__edit-profile-button"
+);
+export const formEditProfile = popupEditProfile.querySelector(
+  ".popup__form_type_edit-profile"
+);
+export const userData = {
+  userNameSelector: ".profile__user-name",
+  userProfessionSelector: ".profile__user-profession",
+};
+export const galleryItemTemplate = ".gallery-item-template";
+export const popupAddPhoto = document.querySelector(".popup-add-photo");
+export const addPhotoButton = document.querySelector(
+  ".profile__add-photo-button"
+);
+export const formAddPhoto = popupAddPhoto.querySelector(
+  ".popup__form_type_add-photo"
+);
+// export { galleryArray };
