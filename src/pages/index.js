@@ -47,12 +47,22 @@ function handleCardClick(link, name) {
   const popupWithImageObject = {};
   popupWithImageObject.src = link;
   popupWithImageObject.alt = name;
-  const popupWithImage = new PopupWithImage(".popup-big-photo");
   popupWithImage.open(popupWithImageObject);
-  popupWithImage.setEventListeners(popupBigPhotoCloseButton);
 }
-
+//
+function createCard(item) {
+  const newGalleryCard = new Card(
+    item,
+    galleryItemTemplate,
+    handleCardClick //функция открытия попапа с фото
+  );
+  return newGalleryCard.setCard(); //возвращает готовую карточку
+}
 //                                                          -----Объявление классов-----
+// попап с большой фотографией
+const popupWithImage = new PopupWithImage(".popup-big-photo");
+popupWithImage.setEventListeners();
+//
 // валидация форм
 const formCardValidator = new FormValidator(settings, formAddPhoto);
 const formProfileValidator = new FormValidator(settings, formEditProfile);
@@ -63,38 +73,16 @@ formProfileValidator.enableValidation();
 const gallery = new Section(
   {
     items: galleryArray,
-    renderer: (item) => {
-      const newGalleryCard = new Card(
-        item,
-        galleryItemTemplate,
-        handleCardClick //функция открытия попапа с фото
-      );
-      gallery.addItem(newGalleryCard.createCard()); //добавляет объект класса card в разметку
-    },
+    renderer: createCard,
   },
   ".gallery__list"
 );
+gallery.renderItemsFromArray();
 //
 // добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
   {
-    submitFunc: (formValues) => {
-      const gallery = new Section(
-        {
-          items: [formValues],
-          renderer: (item) => {
-            const newGalleryCard = new Card(
-              item,
-              galleryItemTemplate,
-              handleCardClick //функция открытия попапа с фото
-            );
-            gallery.addItem(newGalleryCard.createCard()); //добавляет объект класса card в разметку
-          },
-        },
-        ".gallery__list"
-      );
-      gallery.renderItemsFromArray();
-    },
+    submitFunc: (newCard) => gallery.addItem(createCard(newCard)),
   },
   ".popup-add-photo"
 );
@@ -113,7 +101,7 @@ popupWithFormsUserProfile.setEventListeners();
 //
 // управление данными о пользователе на странице
 const userInfo = new UserInfo({ userData: userData });
-gallery.renderItemsFromArray();
+
 //
 //                                                            -----СОБЫТИЯ-----
 

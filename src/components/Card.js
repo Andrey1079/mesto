@@ -20,7 +20,7 @@ export default class Card {
     this.openPopupFunc = openPopupFunc;
   }
 
-  createCard() {
+  setCard() {
     this._setEventLIsteners();
     this._galeryImage.src = this._url;
     this._galeryImage.alt = this._caption;
