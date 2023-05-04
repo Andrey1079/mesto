@@ -1,5 +1,5 @@
 import Popup from "./Popup.js";
-import Section from "./Section.js";
+// import Section from "./Section.js";
 export default class PopupWithImage extends Popup {
   constructor({ data }, popupSelector) {
     super(popupSelector);

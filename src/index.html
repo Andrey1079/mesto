@@ -5,14 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="page">
     <div class="page__container">
       <!--  START HEADER -->
       <header class="header page__header">
         <img
-          src="./images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="логотип сайта Mesto"
           class="header__logo"
         />
@@ -25,7 +24,7 @@
         <section class="profile page__profile">
           <img
             class="profile__photo"
-            src="./images/j_iv_kusto.jpg"
+            src="<%=require('./images/j_iv_kusto.jpg')%>"
             alt="Жак-Ив Кусто"
           />
           <div class="profile__about-user">
@@ -145,7 +144,7 @@
     <div class="popup popup_dark-overlay popup-big-photo">
       <figure class="popup__img-container">
         <button type="button" class="popup__close-button button"></button>
-        <img class="popup__img" src="./images/karachaevsk.jpg" alt="" />
+        <img class="popup__img" src="" alt="" />
         <figcaption class="popup__place-name-of-big-photo"></figcaption>
       </figure>
     </div>
@@ -160,8 +159,5 @@
         <button type="button" class="button gallery__like-button"></button>
       </li>
     </template>
-    <script src="./scripts/validatorSettings.js"></script>
-    <script src="./scripts/cards.js"></script>
-    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>

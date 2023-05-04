@@ -4,7 +4,9 @@ import Section from "./Section.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForms from "./PopupWithForm.js";
 import UserInfo from "./UserInfo.js";
-
+import { galleryArray } from "./cards.js";
+import { settings } from "./validatorSettings.js";
+import "../pages/index.css";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 
 const popupEditProfile = document.querySelector(".popup-edit-profile");

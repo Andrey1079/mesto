@@ -6,3 +6,4 @@ const settings = {
   errorClass: "popup__form-item-error_visible",
   inputErrorClass: ".popup__form-item-error",
 };
+export { settings };
