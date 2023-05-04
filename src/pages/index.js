@@ -1,12 +1,12 @@
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForms from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
-import { galleryArray } from "./cards.js";
-import { settings } from "./validatorSettings.js";
-import "../pages/index.css";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForms from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import { galleryArray } from "../utils/constants.js";
+import { settings } from "../utils/constants.js";
+import "./index.css";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 
 const popupEditProfile = document.querySelector(".popup-edit-profile");
