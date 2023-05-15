@@ -1,4 +1,6 @@
 .gallery__city {
+  grid-row-start: 2;
+  grid-row-end: 4;
   display: block;
   margin: 25px 0 25px 21px;
   padding: 0;

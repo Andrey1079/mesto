@@ -13,10 +13,12 @@ import {
   galleryItemTemplate,
   addPhotoButton,
   formAddPhoto,
+  avatarEditButton,
+  formEditAvatar,
 } from "../utils/constants.js";
 import "./index.css";
+import Popup from "../components/Popup.js";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
-
 //                                                            -----ФУНКЦИИ-----
 // Открытие попапа с увеличенной фотографией
 function handleCardClick(link, name) {
@@ -35,15 +37,17 @@ function createCard(item) {
   return newGalleryCard.setCard(); //возвращает готовую карточку
 }
 //                                                          -----Объявление классов-----
-// попап с большой фотографией
+// объявление объекта попап с большой фотографией
 const popupWithImage = new PopupWithImage(".popup-big-photo");
 popupWithImage.setEventListeners();
 //
 // валидация форм
 const formCardValidator = new FormValidator(settings, formAddPhoto);
 const formProfileValidator = new FormValidator(settings, formEditProfile);
+const formAvatarValidation = new FormValidator(settings, formEditAvatar);
 formCardValidator.enableValidation();
 formProfileValidator.enableValidation();
+formAvatarValidation.enableValidation();
 //
 //  галерея из массива
 const gallery = new Section(
@@ -55,7 +59,7 @@ const gallery = new Section(
 );
 gallery.renderItemsFromArray();
 //
-// добавление карточки галереи
+// объявление объекта добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
   {
     submitFunc: (newCard) => gallery.addItem(createCard(newCard)),
@@ -64,7 +68,7 @@ const popupWithFormsAddPhoto = new PopupWithForms(
 );
 popupWithFormsAddPhoto.setEventListeners();
 //
-// изменение данных о пользователе
+//объявление объекта изменение данных о пользователе
 const popupWithFormsUserProfile = new PopupWithForms(
   {
     submitFunc: (formValues) => {
@@ -75,7 +79,20 @@ const popupWithFormsUserProfile = new PopupWithForms(
 );
 popupWithFormsUserProfile.setEventListeners();
 //
-// управление данными о пользователе на странице
+// объявление объекта изменение аватарки пользователя
+const popupWithFormsEditAvatar = new PopupWithForms(
+  {
+    submitFunc: () => console.log("sdfgsdfg"),
+  },
+  ".popup-edit-avatar"
+);
+popupWithFormsEditAvatar.setEventListeners();
+//
+// объявление объекта открытия окна подстверждения удаления карточки
+const popupAreYouShure = new Popup(".popup-edit-avatar");
+popupAreYouShure.setEventListeners();
+//
+//объявление объекта управление данными о пользователе на странице
 const userInfo = new UserInfo({ userData: userData });
 
 //
@@ -93,4 +110,10 @@ popupProfileButton.addEventListener("click", () => {
   formProfileValidator.resetInputsErrors();
   popupWithFormsUserProfile.setInputValues(userInfo.getUserInfo());
   popupWithFormsUserProfile.open();
+});
+
+avatarEditButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  formAvatarValidation.resetInputsErrors();
+  popupWithFormsEditAvatar.open();
 });

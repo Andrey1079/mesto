@@ -19,6 +19,7 @@ module.exports = {
     compress: true,
     port: 8080,
   },
+
   module: {
     rules: [
       {
@@ -45,6 +46,7 @@ module.exports = {
       },
     ],
   },
+  devtool: "inline-source-map",
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",

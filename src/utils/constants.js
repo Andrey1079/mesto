@@ -51,4 +51,10 @@ export const addPhotoButton = document.querySelector(
 export const formAddPhoto = popupAddPhoto.querySelector(
   ".popup__form_type_add-photo"
 );
-// export { galleryArray };
+export const popupEditAvatar = document.querySelector(".popup-edit-avatar");
+export const avatarEditButton = document.querySelector(
+  ".profile__avatar-edit-button"
+);
+export const formEditAvatar = popupEditAvatar.querySelector(
+  ".popup__form_type_edit-avatar"
+);

@@ -18,15 +18,10 @@
       </header>
 
       <!-- END HEADER -->
-
       <main>
         <!-- START PROFILE-->
         <section class="profile page__profile">
-          <img
-            class="profile__photo"
-            src="<%=require('./images/j_iv_kusto.jpg')%>"
-            alt="Жак-Ив Кусто"
-          />
+          <button class="button profile__avatar-edit-button"></button>
           <div class="profile__about-user">
             <div class="profile__name-plus-button">
               <h1 class="profile__user-name">Жак-Ив Кусто</h1>
@@ -60,7 +55,7 @@
 
     <!-- START POPUP EDIT PROFILE-->
     <div class="popup popup-edit-profile">
-      <div class="popup__card">
+      <div class="popup__card popup__card_size_L">
         <button type="button" class="popup__close-button button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form
@@ -102,7 +97,7 @@
 
     <!-- START POPUP FOR ADD PHOTO -->
     <div class="popup popup-add-photo">
-      <div class="popup__card">
+      <div class="popup__card popup__card_size_L">
         <button type="button" class="popup__close-button button"></button>
         <h2 class="popup__title">Новое место</h2>
         <form
@@ -150,6 +145,45 @@
     </div>
     <!-- END POPUP BIG PHOTO -->
 
+    <!-- START POPUP  UPDATE AVATAR-->
+    <div class="popup popup-edit-avatar">
+      <div class="popup__card popup__card_size_M">
+        <button type="button" class="popup__close-button button"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form
+          name="popup-edit-avatar"
+          class="popup__form popup__form_type_edit-avatar"
+          novalidate
+        >
+          <input
+            class="popup__form-item popup__form-item_type_avtar-link"
+            type="url"
+            name="link"
+            placeholder="cсылка на аватар"
+            id="avatar-link"
+            required
+          />
+          <span class="popup__form-item-error avatar-link-error"></span>
+          <input
+            value="Сохранить"
+            type="submit"
+            class="popup__submit-button button"
+          />
+        </form>
+      </div>
+    </div>
+    <!-- END POPUP  UPDATE AVATAR -->
+
+    <!-- START POPUP ARE YOU SHURE? -->
+    <div class="popup">
+      <div class="popup__card popup__card_size_S">
+        <button type="button" class="popup__close-button button"></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <input type="submit" value="Да" class="popup__submit-button button" />
+      </div>
+    </div>
+    <!-- END POPUP ARE YOU SHURE? -->
+
     <!-- TEMPLATE FOR GALLERY -->
     <template class="gallery-item-template">
       <li class="gallery__item">
@@ -157,6 +191,7 @@
         <img class="gallery__image" />
         <h2 class="gallery__city"></h2>
         <button type="button" class="button gallery__like-button"></button>
+        <p class="gallery__like-counter"></p>
       </li>
     </template>
   </body>

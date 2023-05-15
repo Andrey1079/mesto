@@ -1,9 +1,18 @@
 .popup__form-item-error {
-  margin: 0 36px;
   font-weight: 400;
   font-size: 12px;
   line-height: 1.25;
   color: #ff0000;
   min-height: 30px;
   visibility: hidden;
+}
+.popup__form-item-error:last-of-type {
+  margin-bottom: 18px;
+}
+
+/* styles for 320-527 */
+@media screen and (max-width: 567px) {
+  .popup__form-item-error:last-of-type {
+    margin-bottom: 15px;
+  }
 }
