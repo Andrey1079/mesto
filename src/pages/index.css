@@ -47,3 +47,4 @@
 @import url(../blocks/popup/__card/_size/popup__card_size_L.css);
 @import url(../blocks/popup/__card/_size/popup__card_size_S.css);
 @import url(../blocks/gallery/__like-counter/gallery__like-counter.css);
+@import url(../blocks/popup/__error-message/popup__error-message.css);

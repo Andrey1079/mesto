@@ -60,3 +60,6 @@ export const avatarEditButton = document.querySelector(
 export const formEditAvatar = popupEditAvatar.querySelector(
   ".popup__form_type_edit-avatar"
 );
+export const popupErrorMessage = document.querySelector(
+  ".popup__error-message"
+);

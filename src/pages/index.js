@@ -17,13 +17,14 @@ import {
   formAddPhoto,
   avatarEditButton,
   formEditAvatar,
+  popupErrorMessage,
 } from "../utils/constants.js";
 import "./index.css";
 import Popup from "../components/Popup.js";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 //                                                            -----ФУНКЦИИ-----
-//
 
+// Функция формирования объекта для профиля
 function setUserDataObj(res) {
   userData.name = res.name;
   userData.profession = res.about;
@@ -52,13 +53,21 @@ function createCard(item) {
 //                                                          -----Объявление классов-----
 // объявление класса Api
 //
-const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
-  headers: {
-    authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
-    "Content-Type": "application/json",
+const api = new Api(
+  {
+    baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
+    headers: {
+      authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
+      "Content-Type": "application/json",
+    },
   },
-});
+  {
+    showErrFunc: (err) => {
+      popupErrorMessage.textContent = err;
+      popupError.open();
+    },
+  }
+);
 
 //
 // объявление объекта попап с большой фотографией
@@ -110,8 +119,9 @@ popupWithFormsUserProfile.setEventListeners();
 const popupWithFormsEditAvatar = new PopupWithForms(
   {
     submitFunc: (formValues) => {
-      api.patchAvatar(formValues);
-      userInfo.setAvatar(formValues);
+      api.patchAvatar(formValues).then((res) => {
+        userInfo.setAvatar(setUserDataObj(res));
+      });
     },
   },
   ".popup-edit-avatar"
@@ -121,6 +131,11 @@ popupWithFormsEditAvatar.setEventListeners();
 // объявление объекта открытия окна подстверждения удаления карточки
 const popupAreYouShure = new Popup(".popup-edit-avatar");
 popupAreYouShure.setEventListeners();
+//
+// объявление попапа с сообщением об ошибке
+const popupError = new Popup(".popup-error");
+popupError.setEventListeners();
+//
 //
 //объявление объекта управление данными о пользователе на странице
 
@@ -147,13 +162,8 @@ avatarEditButton.addEventListener("click", (evt) => {
   formAvatarValidation.resetInputsErrors();
   popupWithFormsEditAvatar.open();
 });
-api
-  .getUserInfo()
-  .then((res) => {
-    setUserDataObj(res);
-    userInfo.setUserInfo(userData);
-    userInfo.setAvatar(userData);
-  })
-  .catch((err) => {
-    userData.errMessage = err;
-  });
+api.getUserInfo().then((res) => {
+  setUserDataObj(res);
+  userInfo.setUserInfo(userData);
+  userInfo.setAvatar(userData);
+});

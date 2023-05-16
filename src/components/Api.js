@@ -1,5 +1,6 @@
 export default class Api {
-  constructor(obj) {
+  constructor(obj, { showErrFunc }) {
+    this._showErrorMessasge = showErrFunc;
     this._baseUrl = obj.baseUrl;
     this._settingsObj = {};
     this._settingsObj.method = "GET";
@@ -10,6 +11,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       } else {
+        this._showErrorMessasge(`Ошибка: ${res.status}`);
         return Promise.reject(`Ошибка: ${res.status}`);
       }
     });
@@ -25,6 +27,7 @@ export default class Api {
       if (res.ok) {
         return res.json();
       } else {
+        this._showErrorMessasge(`Ошибка: ${res.status}`);
         return Promise.reject(`Ошибка: ${res.status}`);
       }
     });
@@ -39,8 +42,14 @@ export default class Api {
       avatar: userData.url,
     });
     return fetch(`${this._baseUrl}/users/me/avatar`, this._settingsObj).then(
-      (res) => console.log(res)
+      (res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          this._showErrorMessasge(`Ошибка: ${res.status}`);
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      }
     );
   }
-  getErrorMessasge() {}
 }
