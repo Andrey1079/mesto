@@ -4,11 +4,13 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForms from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 import {
   settings,
   galleryArray,
   popupProfileButton,
   formEditProfile,
+  userDataSelectors,
   userData,
   galleryItemTemplate,
   addPhotoButton,
@@ -20,6 +22,22 @@ import "./index.css";
 import Popup from "../components/Popup.js";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 //                                                            -----ФУНКЦИИ-----
+//
+
+// function getProfileInfo() {
+//   api
+//     .getUserInfo()
+//     .then((res) => {
+//       // userData.name = res.name;
+//       // userData.profession = res.about;
+//       // userData.url = res.avatar;
+//       // userData.cohort = res.cohort;
+//       // userData.id = res._id;
+//     })
+//     .catch((err) => {
+//       userData.errMessage = err;
+//     });
+// }
 // Открытие попапа с увеличенной фотографией
 function handleCardClick(link, name) {
   const popupWithImageObject = {};
@@ -36,7 +54,19 @@ function createCard(item) {
   );
   return newGalleryCard.setCard(); //возвращает готовую карточку
 }
+
 //                                                          -----Объявление классов-----
+// объявление класса Api
+//
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
+  headers: {
+    authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
+    "Content-Type": "application/json",
+  },
+});
+
+//
 // объявление объекта попап с большой фотографией
 const popupWithImage = new PopupWithImage(".popup-big-photo");
 popupWithImage.setEventListeners();
@@ -82,7 +112,9 @@ popupWithFormsUserProfile.setEventListeners();
 // объявление объекта изменение аватарки пользователя
 const popupWithFormsEditAvatar = new PopupWithForms(
   {
-    submitFunc: () => console.log("sdfgsdfg"),
+    submitFunc: (formValues) => {
+      userInfo.setAvatar(formValues);
+    },
   },
   ".popup-edit-avatar"
 );
@@ -93,8 +125,13 @@ const popupAreYouShure = new Popup(".popup-edit-avatar");
 popupAreYouShure.setEventListeners();
 //
 //объявление объекта управление данными о пользователе на странице
-const userInfo = new UserInfo({ userData: userData });
 
+const userInfo = new UserInfo(
+  { userDataSelectors: userDataSelectors },
+  {
+    userData,
+  }
+);
 //
 //                                                            -----СОБЫТИЯ-----
 
@@ -117,3 +154,17 @@ avatarEditButton.addEventListener("click", (evt) => {
   formAvatarValidation.resetInputsErrors();
   popupWithFormsEditAvatar.open();
 });
+api
+  .getUserInfo()
+  .then((res) => {
+    userData.name = res.name;
+    userData.profession = res.about;
+    userData.url = res.avatar;
+    userData.cohort = res.cohort;
+    userData.id = res._id;
+    userInfo.setUserInfo(userData);
+    userInfo.setAvatar(userData);
+  })
+  .catch((err) => {
+    userData.errMessage = err;
+  });
