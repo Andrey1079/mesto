@@ -4,10 +4,10 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForms from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupConfirm from "../components/PopupConfirm.js";
 import Api from "../components/Api.js";
 import {
   settings,
-  galleryArray,
   popupProfileButton,
   formEditProfile,
   userDataSelectors,
@@ -40,12 +40,32 @@ function handleCardClick(link, name) {
   popupWithImageObject.alt = name;
   popupWithImage.open(popupWithImageObject);
 }
+// удаление карточки из галереи
+function openPopupConfirm(id, card) {
+  // api.deleteCard(id);
+  popupAreYouShure.open(id, card);
+}
+// установка/снятие лайка
+function likesToggle(id, likesArray) {
+  if (likesArray.some((item) => item.name === userData.name)) {
+    api.likesToggle(id, "DELETE").then((res) => {
+      this.setLikes(res.likes);
+    });
+  } else {
+    api.likesToggle(id, "PUT").then((res) => {
+      this.setLikes(res.likes);
+    });
+  }
+}
 //
+//функция создания карточки галлереи
 function createCard(item) {
   const newGalleryCard = new Card(
     item,
     galleryItemTemplate,
-    handleCardClick //функция открытия попапа с фото
+    handleCardClick, //функция открытия попапа с фото
+    openPopupConfirm,
+    likesToggle
   );
   return newGalleryCard.setCard(); //возвращает готовую карточку
 }
@@ -68,7 +88,9 @@ const api = new Api(
     },
   }
 );
-
+api.getInitialCards().then((res) => {
+  gallery.renderItemsFromArray(res.reverse());
+});
 //
 // объявление объекта попап с большой фотографией
 const popupWithImage = new PopupWithImage(".popup-big-photo");
@@ -85,17 +107,18 @@ formAvatarValidation.enableValidation();
 //  галерея из массива
 const gallery = new Section(
   {
-    items: galleryArray,
     renderer: createCard,
   },
   ".gallery__list"
 );
-gallery.renderItemsFromArray();
 //
 // объявление объекта добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
   {
-    submitFunc: (newCard) => gallery.addItem(createCard(newCard)),
+    submitFunc: (newCard) =>
+      api.postNewCard(newCard).then((res) => {
+        gallery.addItem(createCard(res));
+      }),
   },
   ".popup-add-photo"
 );
@@ -129,7 +152,14 @@ const popupWithFormsEditAvatar = new PopupWithForms(
 popupWithFormsEditAvatar.setEventListeners();
 //
 // объявление объекта открытия окна подстверждения удаления карточки
-const popupAreYouShure = new Popup(".popup-edit-avatar");
+const popupAreYouShure = new PopupConfirm(".popup-confirm", {
+  submitFunc: (id) => {
+    // evt.preventDefault();
+    // console.log("asdf");
+    api.deleteCard(id);
+    // popupAreYouShure.close();
+  },
+});
 popupAreYouShure.setEventListeners();
 //
 // объявление попапа с сообщением об ошибке
