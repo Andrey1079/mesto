@@ -24,20 +24,14 @@ import Popup from "../components/Popup.js";
 //                                                            -----ФУНКЦИИ-----
 //
 
-// function getProfileInfo() {
-//   api
-//     .getUserInfo()
-//     .then((res) => {
-//       // userData.name = res.name;
-//       // userData.profession = res.about;
-//       // userData.url = res.avatar;
-//       // userData.cohort = res.cohort;
-//       // userData.id = res._id;
-//     })
-//     .catch((err) => {
-//       userData.errMessage = err;
-//     });
-// }
+function setUserDataObj(res) {
+  userData.name = res.name;
+  userData.profession = res.about;
+  userData.url = res.avatar;
+  userData.cohort = res.cohort;
+  userData.id = res._id;
+  return userData;
+}
 // Открытие попапа с увеличенной фотографией
 function handleCardClick(link, name) {
   const popupWithImageObject = {};
@@ -98,11 +92,14 @@ const popupWithFormsAddPhoto = new PopupWithForms(
 );
 popupWithFormsAddPhoto.setEventListeners();
 //
-//объявление объекта изменение данных о пользователе
+//объявление объекта изменения данных о пользователе
 const popupWithFormsUserProfile = new PopupWithForms(
   {
     submitFunc: (formValues) => {
-      userInfo.setUserInfo(formValues);
+      api.setUserInfo(formValues).then((res) => {
+        setUserDataObj(res);
+        userInfo.setUserInfo(userData);
+      });
     },
   },
   ".popup-edit-profile"
@@ -113,6 +110,7 @@ popupWithFormsUserProfile.setEventListeners();
 const popupWithFormsEditAvatar = new PopupWithForms(
   {
     submitFunc: (formValues) => {
+      api.patchAvatar(formValues);
       userInfo.setAvatar(formValues);
     },
   },
@@ -126,12 +124,7 @@ popupAreYouShure.setEventListeners();
 //
 //объявление объекта управление данными о пользователе на странице
 
-const userInfo = new UserInfo(
-  { userDataSelectors: userDataSelectors },
-  {
-    userData,
-  }
-);
+const userInfo = new UserInfo({ userDataSelectors: userDataSelectors });
 //
 //                                                            -----СОБЫТИЯ-----
 
@@ -157,11 +150,7 @@ avatarEditButton.addEventListener("click", (evt) => {
 api
   .getUserInfo()
   .then((res) => {
-    userData.name = res.name;
-    userData.profession = res.about;
-    userData.url = res.avatar;
-    userData.cohort = res.cohort;
-    userData.id = res._id;
+    setUserDataObj(res);
     userInfo.setUserInfo(userData);
     userInfo.setAvatar(userData);
   })

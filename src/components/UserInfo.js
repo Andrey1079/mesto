@@ -1,6 +1,5 @@
 export default class UserInfo {
-  constructor({ userDataSelectors }, { userData }) {
-    this._userData = userData;
+  constructor({ userDataSelectors }) {
     this._userNameField = document.querySelector(
       userDataSelectors.userNameSelector
     );
