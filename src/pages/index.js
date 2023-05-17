@@ -18,10 +18,29 @@ import {
   formEditAvatar,
   popupErrorMessage,
   userNameField,
+  submitAddPhoto,
+  submitChangeAvatar,
+  submitEditProfile,
+  submitDelCard,
 } from "../utils/constants.js";
 import "./index.css";
 import Popup from "../components/Popup.js";
 //
+// функция сообщения об ошибке от сервера
+function showServerErr(err) {
+  popupErrorMessage.textContent = err;
+  popupError.open();
+}
+//
+// функция показывающая процесс обработки запроса сервером
+function renderLoading(isLoading, button, text) {
+  if (isLoading) {
+    console.log("sadfa");
+    button.value = text;
+  } else {
+    button.value = text;
+  }
+}
 //                                                        -----Галерея-----
 //
 // получение имени пользователя
@@ -30,27 +49,32 @@ function getCurrentUserName() {
 }
 
 // установка/снятие лайка
-function likesToggle(id, likesArray) {
-  if (likesArray.some((item) => item.name === getCurrentUserName())) {
-    api.likesToggle(id, "DELETE").then((res) => {
+function likesToggle(id, method) {
+  api
+    .likesToggle(id, method)
+    .then((res) => {
       this.setLikes(res.likes);
-    });
-  } else {
-    api.likesToggle(id, "PUT").then((res) => {
-      this.setLikes(res.likes);
-    });
-  }
+    })
+    .catch((err) => showServerErr(err));
 }
 //
 //
 //открытие попапа с подтверждением
 function clickBinButton(card, id) {
-  popupAreYouShure.open();
-  popupAreYouShure.setSubmit(() => {
-    api.deleteCard(id).then(() => {
-      popupAreYouShure.close();
-      card.remove();
-    });
+  popupAreYouSure.open();
+  popupAreYouSure.setSubmit(() => {
+    renderLoading(true, submitDelCard, "Удаление...");
+    api
+      .deleteCard(id)
+      .then(() => {
+        card.remove();
+      })
+      .catch((err) => showServerErr(err))
+      .finally(() => {
+        renderLoading(false, submitDelCard, "Удалить");
+
+        popupAreYouSure.close();
+      });
   });
 }
 //
@@ -84,9 +108,18 @@ const gallery = new Section(
 //
 // функция сабмита добавления фотографии
 function SubmitFuncForPopupWithFormsAddPhoto(newCard) {
-  api.postNewCard(newCard).then((res) => {
-    gallery.addItem(createCard(res));
-  });
+  renderLoading(true, submitAddPhoto, "Сохранение...");
+
+  api
+    .postNewCard(newCard)
+    .then((res) => {
+      gallery.addItem(createCard(res));
+    })
+    .catch((err) => showServerErr(err))
+    .finally(() => {
+      renderLoading(false, submitAddPhoto, "Создать");
+      popupWithFormsAddPhoto.close();
+    });
 }
 // объявление объекта добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
@@ -99,29 +132,46 @@ popupWithFormsAddPhoto.setEventListeners();
 //
 //                                                            -----Профиль юзера-----
 //
+//
+// функция сабмит в форме изменения данных пользователя
+function submitPopupWithFormsUserProfile(formValues) {
+  renderLoading(true, submitEditProfile, "Сохранение...");
+  api
+    .setUserInfo(formValues)
+    .then((res) => {
+      userInfo.setUserInfo(res);
+    })
+    .catch((err) => showServerErr(err))
+    .finally(() => {
+      renderLoading(false, submitEditProfile, "Сохранить");
+      popupWithFormsUserProfile.close();
+    });
+}
+
 //объявление объекта изменения данных о пользователе
 const popupWithFormsUserProfile = new PopupWithForms(
-  {
-    submitFunc: (formValues) => {
-      api.setUserInfo(formValues).then((res) => {
-        setUserDataObj(res);
-        userInfo.setUserInfo(userData);
-      });
-    },
-  },
+  submitPopupWithFormsUserProfile,
   ".popup-edit-profile"
 );
 popupWithFormsUserProfile.setEventListeners();
 //
+// функция сабмит изменения аватарки пользователя
+function submitPopupWithFormsEditAvatar(formValues) {
+  renderLoading(true, submitChangeAvatar, "Сохранение...");
+  api
+    .patchAvatar(formValues)
+    .then((res) => {
+      userInfo.setAvatar(res);
+    })
+    .catch((err) => showServerErr(err))
+    .finally(() => {
+      renderLoading(false, submitChangeAvatar, "Сохранить");
+      popupWithFormsEditAvatar.close();
+    });
+}
 // объявление объекта изменение аватарки пользователя
 const popupWithFormsEditAvatar = new PopupWithForms(
-  {
-    submitFunc: (formValues) => {
-      api.patchAvatar(formValues).then((res) => {
-        userInfo.setAvatar(setUserDataObj(res));
-      });
-    },
-  },
+  submitPopupWithFormsEditAvatar,
   ".popup-edit-avatar"
 );
 popupWithFormsEditAvatar.setEventListeners();
@@ -144,19 +194,11 @@ function SubmitFuncForPopupWithConfirmation(id) {
     this.close();
   });
 }
-const popupAreYouShure = new PopupWithConfirmation(
+const popupAreYouSure = new PopupWithConfirmation(
   ".popup-confirm",
   SubmitFuncForPopupWithConfirmation
-  // {
-  //   submitFunc: (id) => {
-  //     // evt.preventDefault();
-  //     // console.log("asdf");
-  //     api.deleteCard(id);
-  //     // popupAreYouShure.close();
-  //   },
-  // }
 );
-popupAreYouShure.setEventListeners();
+popupAreYouSure.setEventListeners();
 //
 //                                                                -----*****-----
 //
@@ -222,8 +264,7 @@ popupProfileButton.addEventListener("click", () => {
 });
 //
 //  кнопка изменения аватара
-avatarEditButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
+avatarEditButton.addEventListener("click", () => {
   formAvatarValidation.resetInputsErrors();
   popupWithFormsEditAvatar.open();
 });
@@ -231,11 +272,14 @@ avatarEditButton.addEventListener("click", (evt) => {
 //
 //                                              -----Инициализация страницы-----
 //
-api.getStartInfo().then((startData) => {
-  const [userData, getInitialCards] = startData;
-  userInfo.setUserInfo(userData);
-  userInfo.setAvatar(userData);
-  // перебирает массив карточек и запускает createCard
-  gallery.renderItemsFromArray(getInitialCards.reverse());
-});
+api
+  .getStartInfo()
+  .then((startData) => {
+    const [userData, getInitialCards] = startData;
+    userInfo.setUserInfo(userData);
+    userInfo.setAvatar(userData);
+    // перебирает массив карточек и запускает createCard
+    gallery.renderItemsFromArray(getInitialCards.reverse());
+  })
+  .catch((err) => showServerErr(err));
 //                                                          -----*****-----

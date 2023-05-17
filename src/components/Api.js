@@ -12,22 +12,12 @@ export default class Api {
   }
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, this._settingsObj).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        this._showErrorMessasge(`Ошибка: ${res.status}`);
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._checkResponse(res);
     });
   }
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, this._settingsObj).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        this._showErrorMessasge(`Ошибка: ${res.status}`);
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._checkResponse(res);
     });
   }
   setUserInfo(userData) {
@@ -37,12 +27,7 @@ export default class Api {
       about: userData.profession,
     });
     return fetch(`${this._baseUrl}/users/me`, this._settingsObj).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        this._showErrorMessasge(`Ошибка: ${res.status}`);
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._checkResponse(res);
     });
   }
   postNewCard(newCard) {
@@ -52,24 +37,14 @@ export default class Api {
       link: newCard.link,
     });
     return fetch(`${this._baseUrl}/cards`, this._settingsObj).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        this._showErrorMessasge(`Ошибка: ${res.status}`);
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._checkResponse(res);
     });
   }
   deleteCard(id) {
     this._settingsObj.method = "DELETE";
     return fetch(`${this._baseUrl}/cards/${id}`, this._settingsObj).then(
       (res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          this._showErrorMessasge(`Ошибка: ${res.status}`);
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        return this._checkResponse(res);
       }
     );
   }
@@ -77,12 +52,7 @@ export default class Api {
     this._settingsObj.method = method;
     return fetch(`${this._baseUrl}/cards/${id}/likes`, this._settingsObj).then(
       (res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          this._showErrorMessasge(`Ошибка: ${res.status}`);
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        return this._checkResponse(res);
       }
     );
   }
@@ -93,13 +63,15 @@ export default class Api {
     });
     return fetch(`${this._baseUrl}/users/me/avatar`, this._settingsObj).then(
       (res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          this._showErrorMessasge(`Ошибка: ${res.status}`);
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        return this._checkResponse(res);
       }
     );
+  }
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   }
 }

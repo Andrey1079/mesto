@@ -47,9 +47,13 @@ export default class Card {
     return this._galleryItemTemplate;
   }
   _setEventLIsteners() {
-    this._gallerylikeButton.addEventListener("click", (evt) =>
-      this._likesToggleFunc(this._cardId, this._likesArray)
-    );
+    this._gallerylikeButton.addEventListener("click", (evt) => {
+      if (this._likesArray.some((item) => item.name === this._userName)) {
+        this._likesToggleFunc(this._cardId, "DELETE");
+      } else {
+        this._likesToggleFunc(this._cardId, "PUT");
+      }
+    });
 
     this._galleryTrashButton.addEventListener("click", (evt) => {
       this.clickBinButton(this, this._cardId);
@@ -62,13 +66,7 @@ export default class Card {
     this._galleryItem.remove();
     this._galleryItem = null;
   }
-  // _deleteGalleryItem() {
-  //   this.clickBinButton(this, this._cardId);
-
-  // this.clickBinButton(this._cardId, this._galleryItem);
-  // }
   _checkOwnerCard() {
-    // console.log("owner is ", cardOwner, "user is", userName);
     if (!(this._cardOwner === this._userName)) {
       this._galleryTrashButton.classList.add("gallery__bin-button_invisible");
     }
