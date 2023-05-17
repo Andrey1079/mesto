@@ -61,16 +61,17 @@ export default class Api {
     });
   }
   deleteCard(id) {
-    console.log(id);
     this._settingsObj.method = "DELETE";
-    fetch(`${this._baseUrl}/cards/${id}`, this._settingsObj).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        this._showErrorMessasge(`Ошибка: ${res.status}`);
-        return Promise.reject(`Ошибка: ${res.status}`);
+    return fetch(`${this._baseUrl}/cards/${id}`, this._settingsObj).then(
+      (res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          this._showErrorMessasge(`Ошибка: ${res.status}`);
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
       }
-    });
+    );
   }
   likesToggle(id, method) {
     this._settingsObj.method = method;

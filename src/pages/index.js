@@ -22,7 +22,7 @@ import {
 import "./index.css";
 import Popup from "../components/Popup.js";
 //
-//                                                        -----Отрисовка карточек на странице-----
+//                                                        -----Галерея-----
 //
 // получение имени пользователя
 function getCurrentUserName() {
@@ -42,9 +42,16 @@ function likesToggle(id, likesArray) {
   }
 }
 //
+//
 //открытие попапа с подтверждением
-function openPopupConfirm(id, card) {
-  popupAreYouShure.open(id, card);
+function clickBinButton(card, id) {
+  popupAreYouShure.open();
+  popupAreYouShure.setSubmit(() => {
+    api.deleteCard(id).then(() => {
+      popupAreYouShure.close();
+      card.remove();
+    });
+  });
 }
 //
 // Открытие попапа с увеличенной фотографией
@@ -61,7 +68,7 @@ function createCard(item) {
     item,
     galleryItemTemplate,
     handleCardClick,
-    openPopupConfirm,
+    clickBinButton,
     likesToggle,
     getCurrentUserName
   );
@@ -74,53 +81,23 @@ const gallery = new Section(
   },
   ".gallery__list"
 );
-//                                                              ----- *****-----
 //
-
-//                                                          -----Объявление классов-----
-// объявление класса Api
-//
-const api = new Api(
-  {
-    baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
-    headers: {
-      authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
-      "Content-Type": "application/json",
-    },
-  },
-  {
-    showErrFunc: (err) => {
-      popupErrorMessage.textContent = err;
-      popupError.open();
-    },
-  }
-);
-
-//
-// объявление объекта попап с большой фотографией
-const popupWithImage = new PopupWithImage(".popup-big-photo");
-popupWithImage.setEventListeners();
-//
-// валидация форм
-const formCardValidator = new FormValidator(settings, formAddPhoto);
-const formProfileValidator = new FormValidator(settings, formEditProfile);
-const formAvatarValidation = new FormValidator(settings, formEditAvatar);
-formCardValidator.enableValidation();
-formProfileValidator.enableValidation();
-formAvatarValidation.enableValidation();
-//
-//
+// функция сабмита добавления фотографии
+function SubmitFuncForPopupWithFormsAddPhoto(newCard) {
+  api.postNewCard(newCard).then((res) => {
+    gallery.addItem(createCard(res));
+  });
+}
 // объявление объекта добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
-  {
-    submitFunc: (newCard) =>
-      api.postNewCard(newCard).then((res) => {
-        gallery.addItem(createCard(res));
-      }),
-  },
+  SubmitFuncForPopupWithFormsAddPhoto,
   ".popup-add-photo"
 );
 popupWithFormsAddPhoto.setEventListeners();
+//
+//                                                              -----*****-----
+//
+//                                                            -----Профиль юзера-----
 //
 //объявление объекта изменения данных о пользователе
 const popupWithFormsUserProfile = new PopupWithForms(
@@ -149,26 +126,85 @@ const popupWithFormsEditAvatar = new PopupWithForms(
 );
 popupWithFormsEditAvatar.setEventListeners();
 //
+//                                                                -----*****-----
+//
+//                                                          -----Попап с большой фотографией-----
+//
+const popupWithImage = new PopupWithImage(".popup-big-photo");
+popupWithImage.setEventListeners();
+//
+//                                                                -----*****-----
+//
+//                                                        -----Попап "Вы уверены?"-----
+
 // объявление объекта открытия окна подстверждения удаления карточки
-const popupAreYouShure = new PopupWithConfirmation(".popup-confirm", {
-  submitFunc: (id) => {
-    // evt.preventDefault();
-    // console.log("asdf");
-    api.deleteCard(id);
-    // popupAreYouShure.close();
-  },
-});
+
+function SubmitFuncForPopupWithConfirmation(id) {
+  api.deleteCard(id).then(() => {
+    this.close();
+  });
+}
+const popupAreYouShure = new PopupWithConfirmation(
+  ".popup-confirm",
+  SubmitFuncForPopupWithConfirmation
+  // {
+  //   submitFunc: (id) => {
+  //     // evt.preventDefault();
+  //     // console.log("asdf");
+  //     api.deleteCard(id);
+  //     // popupAreYouShure.close();
+  //   },
+  // }
+);
 popupAreYouShure.setEventListeners();
 //
+//                                                                -----*****-----
+//
+//                                                      -----Попап сообщение об ошибке-----
+
 // объявление попапа с сообщением об ошибке
 const popupError = new Popup(".popup-error");
 popupError.setEventListeners();
 //
+//                                                                -----*****-----
 //
-//объявление объекта управление данными о пользователе на странице
+//                                                      -----class UserInfo-----
 
 const userInfo = new UserInfo({ userDataSelectors: userDataSelectors });
 //
+//                                                          -----*****-----
+
+//                                                      -----class Api-----
+//
+const api = new Api(
+  {
+    baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
+    headers: {
+      authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
+      "Content-Type": "application/json",
+    },
+  },
+  {
+    showErrFunc: (err) => {
+      popupErrorMessage.textContent = err;
+      popupError.open();
+    },
+  }
+);
+//
+//                                                          -----*****-----
+
+//                                                      -----class FormValidator-----
+//
+const formCardValidator = new FormValidator(settings, formAddPhoto);
+const formProfileValidator = new FormValidator(settings, formEditProfile);
+const formAvatarValidation = new FormValidator(settings, formEditAvatar);
+formCardValidator.enableValidation();
+formProfileValidator.enableValidation();
+formAvatarValidation.enableValidation();
+//
+//                                                          -----*****-----
+
 //                                                     -----СОБЫТИЯ-----
 
 // кнопка добавления фото
@@ -184,13 +220,15 @@ popupProfileButton.addEventListener("click", () => {
   popupWithFormsUserProfile.setInputValues(userInfo.getUserInfo());
   popupWithFormsUserProfile.open();
 });
-
+//
+//  кнопка изменения аватара
 avatarEditButton.addEventListener("click", (evt) => {
   evt.preventDefault();
   formAvatarValidation.resetInputsErrors();
   popupWithFormsEditAvatar.open();
 });
-
+//                                                          -----*****-----
+//
 //                                              -----Инициализация страницы-----
 //
 api.getStartInfo().then((startData) => {
@@ -200,3 +238,4 @@ api.getStartInfo().then((startData) => {
   // перебирает массив карточек и запускает createCard
   gallery.renderItemsFromArray(getInitialCards.reverse());
 });
+//                                                          -----*****-----

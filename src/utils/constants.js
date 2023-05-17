@@ -21,7 +21,6 @@ export const userDataSelectors = {
 export const userNameField = document.querySelector(
   userDataSelectors.userNameSelector
 );
-console.log(userNameField);
 export const galleryItemTemplate = ".gallery-item-template";
 export const popupAddPhoto = document.querySelector(".popup-add-photo");
 export const addPhotoButton = document.querySelector(
