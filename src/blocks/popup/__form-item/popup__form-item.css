@@ -1,5 +1,5 @@
 .popup__form-item {
-  width: calc(100%-72px);
+  width: calc(100% - 72px);
   font-weight: 400;
   font-size: 14px;
   line-height: 1.214;
@@ -11,7 +11,7 @@
 }
 @media screen and (max-width: 567px) {
   .popup__form-item {
-    width: calc(100%-44px);
+    width: calc(100% - 44px);
   }
 }
 .popup__form-item:focus {
