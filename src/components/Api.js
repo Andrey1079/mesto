@@ -6,6 +6,10 @@ export default class Api {
     this._settingsObj.method = "GET";
     this._settingsObj.headers = obj.headers;
   }
+
+  getStartInfo() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+  }
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, this._settingsObj).then((res) => {
       if (res.ok) {

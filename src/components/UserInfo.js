@@ -23,6 +23,6 @@ export default class UserInfo {
     this._userProfessionField.textContent = userData.profession;
   }
   setAvatar(userData) {
-    this._userAvatar.style.backgroundImage = `url(${userData.url})`;
+    this._userAvatar.style.backgroundImage = `url(${userData.avatar})`;
   }
 }

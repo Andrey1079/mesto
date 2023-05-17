@@ -4,7 +4,7 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForms from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import PopupConfirm from "../components/PopupConfirm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import Api from "../components/Api.js";
 import {
   settings,
@@ -24,15 +24,6 @@ import Popup from "../components/Popup.js";
 //                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
 //                                                            -----ФУНКЦИИ-----
 
-// Функция формирования объекта для профиля
-function setUserDataObj(res) {
-  userData.name = res.name;
-  userData.profession = res.about;
-  userData.url = res.avatar;
-  userData.cohort = res.cohort;
-  userData.id = res._id;
-  return userData;
-}
 // Открытие попапа с увеличенной фотографией
 function handleCardClick(link, name) {
   const popupWithImageObject = {};
@@ -88,9 +79,7 @@ const api = new Api(
     },
   }
 );
-api.getInitialCards().then((res) => {
-  gallery.renderItemsFromArray(res.reverse());
-});
+
 //
 // объявление объекта попап с большой фотографией
 const popupWithImage = new PopupWithImage(".popup-big-photo");
@@ -152,7 +141,7 @@ const popupWithFormsEditAvatar = new PopupWithForms(
 popupWithFormsEditAvatar.setEventListeners();
 //
 // объявление объекта открытия окна подстверждения удаления карточки
-const popupAreYouShure = new PopupConfirm(".popup-confirm", {
+const popupAreYouShure = new PopupWithConfirmation(".popup-confirm", {
   submitFunc: (id) => {
     // evt.preventDefault();
     // console.log("asdf");
@@ -192,8 +181,10 @@ avatarEditButton.addEventListener("click", (evt) => {
   formAvatarValidation.resetInputsErrors();
   popupWithFormsEditAvatar.open();
 });
-api.getUserInfo().then((res) => {
-  setUserDataObj(res);
+
+api.getStartInfo().then((startData) => {
+  const [userData, getInitialCards] = startData;
+  gallery.renderItemsFromArray(getInitialCards.reverse());
   userInfo.setUserInfo(userData);
   userInfo.setAvatar(userData);
 });
