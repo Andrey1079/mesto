@@ -1,5 +1,5 @@
 .popup__submit-button {
-  width: calc(100%-72px);
+  width: calc(100% - 72px);
   box-sizing: border-box;
   max-width: 100%;
   min-height: 50px;
@@ -13,7 +13,7 @@
 /* styles for 320-527 */
 @media screen and (max-width: 527px) {
   .popup__submit-button {
-    width: calc(100%-44px);
+    width: calc(100% - 44px);
     font-size: 14px;
     min-height: 46px;
   }
