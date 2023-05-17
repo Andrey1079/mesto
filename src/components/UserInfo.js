@@ -20,7 +20,7 @@ export default class UserInfo {
 
   setUserInfo(userData) {
     this._userNameField.textContent = userData.name;
-    this._userProfessionField.textContent = userData.profession;
+    this._userProfessionField.textContent = userData.about;
   }
   setAvatar(userData) {
     this._userAvatar.style.backgroundImage = `url(${userData.avatar})`;

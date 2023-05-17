@@ -1,12 +1,11 @@
-import { userData } from "../utils/constants";
-
 export default class Card {
   constructor(
     card,
     galleryItemTemplate,
     openPopupFunc,
     openPopupConfirm,
-    likesToggleFunc
+    likesToggleFunc,
+    getCurrentUserName
   ) {
     this._galleryItemTemplate = document
       .querySelector(galleryItemTemplate)
@@ -36,10 +35,11 @@ export default class Card {
     this.openPopupFunc = openPopupFunc;
     this.openPopupConfirm = openPopupConfirm;
     this._likesToggleFunc = likesToggleFunc;
+    this._userName = getCurrentUserName();
   }
 
   setCard() {
-    this._checkOwnerCard(this._cardOwner);
+    this._checkOwnerCard(this._cardOwner, this._userName);
     this.setLikes(this._likesArray);
     this._setEventLIsteners();
     this._galeryImage.src = this._url;
@@ -63,13 +63,14 @@ export default class Card {
   _deleteGalleryItem() {
     this.openPopupConfirm(this._cardId, this._galleryItem);
   }
-  _checkOwnerCard(user) {
-    if (!(user === userData.name)) {
+  _checkOwnerCard(cardOwner, userName) {
+    // console.log("owner is ", cardOwner, "user is", userName);
+    if (!(cardOwner === userName)) {
       this._galleryTrashButton.classList.add("gallery__bin-button_invisible");
     }
   }
   setLikes(likesArray) {
-    if (likesArray.some((item) => item.name === userData.name)) {
+    if (likesArray.some((item) => item.name === this._userName)) {
       this._gallerylikeButton.classList.add("gallery__like-button_active");
     } else {
       this._gallerylikeButton.classList.remove("gallery__like-button_active");

@@ -13,12 +13,15 @@ export const popupProfileButton = document.querySelector(
 export const formEditProfile = popupEditProfile.querySelector(
   ".popup__form_type_edit-profile"
 );
-export const userData = {};
 export const userDataSelectors = {
   userNameSelector: ".profile__user-name",
   userProfessionSelector: ".profile__user-profession",
   userAvatarSelector: ".profile__avatar-edit-button",
 };
+export const userNameField = document.querySelector(
+  userDataSelectors.userNameSelector
+);
+console.log(userNameField);
 export const galleryItemTemplate = ".gallery-item-template";
 export const popupAddPhoto = document.querySelector(".popup-add-photo");
 export const addPhotoButton = document.querySelector(

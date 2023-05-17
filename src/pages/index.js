@@ -11,34 +11,27 @@ import {
   popupProfileButton,
   formEditProfile,
   userDataSelectors,
-  userData,
   galleryItemTemplate,
   addPhotoButton,
   formAddPhoto,
   avatarEditButton,
   formEditAvatar,
   popupErrorMessage,
+  userNameField,
 } from "../utils/constants.js";
 import "./index.css";
 import Popup from "../components/Popup.js";
-//                                                            -----ОБЪЯЛЕНИЕ ПЕРЕМЕННЫХ-----
-//                                                            -----ФУНКЦИИ-----
+//
+//                                                        -----Отрисовка карточек на странице-----
+//
+// получение имени пользователя
+function getCurrentUserName() {
+  return userNameField.textContent;
+}
 
-// Открытие попапа с увеличенной фотографией
-function handleCardClick(link, name) {
-  const popupWithImageObject = {};
-  popupWithImageObject.src = link;
-  popupWithImageObject.alt = name;
-  popupWithImage.open(popupWithImageObject);
-}
-// удаление карточки из галереи
-function openPopupConfirm(id, card) {
-  // api.deleteCard(id);
-  popupAreYouShure.open(id, card);
-}
 // установка/снятие лайка
 function likesToggle(id, likesArray) {
-  if (likesArray.some((item) => item.name === userData.name)) {
+  if (likesArray.some((item) => item.name === getCurrentUserName())) {
     api.likesToggle(id, "DELETE").then((res) => {
       this.setLikes(res.likes);
     });
@@ -49,17 +42,40 @@ function likesToggle(id, likesArray) {
   }
 }
 //
+//открытие попапа с подтверждением
+function openPopupConfirm(id, card) {
+  popupAreYouShure.open(id, card);
+}
+//
+// Открытие попапа с увеличенной фотографией
+function handleCardClick(link, name) {
+  const popupWithImageObject = {};
+  popupWithImageObject.src = link;
+  popupWithImageObject.alt = name;
+  popupWithImage.open(popupWithImageObject);
+}
+//
 //функция создания карточки галлереи
 function createCard(item) {
   const newGalleryCard = new Card(
     item,
     galleryItemTemplate,
-    handleCardClick, //функция открытия попапа с фото
+    handleCardClick,
     openPopupConfirm,
-    likesToggle
+    likesToggle,
+    getCurrentUserName
   );
-  return newGalleryCard.setCard(); //возвращает готовую карточку
+  return newGalleryCard.setCard(userNameField); //возвращает готовую карточку
 }
+//  Объект Section размещает карточки на странице
+const gallery = new Section(
+  {
+    renderer: createCard,
+  },
+  ".gallery__list"
+);
+//                                                              ----- *****-----
+//
 
 //                                                          -----Объявление классов-----
 // объявление класса Api
@@ -93,13 +109,6 @@ formCardValidator.enableValidation();
 formProfileValidator.enableValidation();
 formAvatarValidation.enableValidation();
 //
-//  галерея из массива
-const gallery = new Section(
-  {
-    renderer: createCard,
-  },
-  ".gallery__list"
-);
 //
 // объявление объекта добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
@@ -160,7 +169,7 @@ popupError.setEventListeners();
 
 const userInfo = new UserInfo({ userDataSelectors: userDataSelectors });
 //
-//                                                            -----СОБЫТИЯ-----
+//                                                     -----СОБЫТИЯ-----
 
 // кнопка добавления фото
 addPhotoButton.addEventListener("click", (evt) => {
@@ -182,9 +191,12 @@ avatarEditButton.addEventListener("click", (evt) => {
   popupWithFormsEditAvatar.open();
 });
 
+//                                              -----Инициализация страницы-----
+//
 api.getStartInfo().then((startData) => {
   const [userData, getInitialCards] = startData;
-  gallery.renderItemsFromArray(getInitialCards.reverse());
   userInfo.setUserInfo(userData);
   userInfo.setAvatar(userData);
+  // перебирает массив карточек и запускает createCard
+  gallery.renderItemsFromArray(getInitialCards.reverse());
 });
