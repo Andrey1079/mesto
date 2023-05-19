@@ -4,7 +4,7 @@ export default class PopupWithConfirmation extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
     this._submitFunc = "";
-    this._form = this._popup.querySelector(".popup__submit-button");
+    this._submitButton = this._popup.querySelector(".popup__submit-button");
   }
 
   setSubmit(submitFunc) {
