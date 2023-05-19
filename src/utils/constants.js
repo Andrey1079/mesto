@@ -39,16 +39,3 @@ export const formEditAvatar = popupEditAvatar.querySelector(
 export const popupErrorMessage = document.querySelector(
   ".popup__error-message"
 );
-export const submitChangeAvatar = popupEditAvatar.querySelector(
-  ".popup__submit-button"
-);
-export const submitAddPhoto = popupAddPhoto.querySelector(
-  ".popup__submit-button"
-);
-export const submitEditProfile = popupEditProfile.querySelector(
-  ".popup__submit-button"
-);
-
-export const submitDelCard = document
-  .querySelector(".popup-confirm")
-  .querySelector(".popup__submit-button");

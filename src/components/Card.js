@@ -5,7 +5,7 @@ export default class Card {
     openPopupFunc,
     clickBinButton,
     likesToggleFunc,
-    getCurrentUserName
+    getUserId
   ) {
     this._galleryItemTemplate = document
       .querySelector(galleryItemTemplate)
@@ -30,11 +30,11 @@ export default class Card {
     this._cardId = card._id;
     this._caption = card.name;
     this._url = card.link;
-    this._cardOwner = card.owner.name;
     this.openPopupFunc = openPopupFunc;
     this.clickBinButton = clickBinButton;
     this._likesToggleFunc = likesToggleFunc;
-    this._userName = getCurrentUserName();
+    this._cardOwnerId = card.owner._id;
+    this._ownerId = getUserId();
   }
 
   setCard() {
@@ -48,10 +48,10 @@ export default class Card {
   }
   _setEventLIsteners() {
     this._gallerylikeButton.addEventListener("click", (evt) => {
-      if (this._likesArray.some((item) => item.name === this._userName)) {
-        this._likesToggleFunc(this._cardId, "DELETE");
+      if (this._likesArray.some((item) => item._id === this._ownerId)) {
+        this._likesToggleFunc(this._cardId, "DELETE", this);
       } else {
-        this._likesToggleFunc(this._cardId, "PUT");
+        this._likesToggleFunc(this._cardId, "PUT", this);
       }
     });
 
@@ -62,17 +62,17 @@ export default class Card {
       this.openPopupFunc(this._galeryImage.src, this._galeryImage.alt);
     });
   }
-  remove() {
+  removeCard() {
     this._galleryItem.remove();
     this._galleryItem = null;
   }
   _checkOwnerCard() {
-    if (!(this._cardOwner === this._userName)) {
+    if (!(this._cardOwnerId === this._ownerId)) {
       this._galleryTrashButton.classList.add("gallery__bin-button_invisible");
     }
   }
   setLikes(likesArray) {
-    if (likesArray.some((item) => item.name === this._userName)) {
+    if (likesArray.some((item) => item._id === this._ownerId)) {
       this._gallerylikeButton.classList.add("gallery__like-button_active");
     } else {
       this._gallerylikeButton.classList.remove("gallery__like-button_active");

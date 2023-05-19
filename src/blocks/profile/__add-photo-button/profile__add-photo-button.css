@@ -7,14 +7,28 @@
   align-self: center;
   border-radius: 2px;
   border: 2px solid #fff;
+  justify-self: flex-end;
+  margin-left: 30px;
 }
 
 /* styles for 320-920*/
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 740px) {
   .profile__add-photo-button {
     width: 282px;
     margin-top: 33px;
     margin-left: 0;
     background-size: 16px;
+    justify-self: center;
+    grid-column: 1 / 3;
+  }
+}
+@media screen and (max-width: 527px) {
+  .profile__add-photo-button {
+    width: 282px;
+    margin-top: 33px;
+    margin-left: 0;
+    background-size: 16px;
+    justify-self: center;
+    grid-column: 1/2;
   }
 }

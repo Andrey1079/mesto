@@ -17,43 +17,30 @@ import {
   avatarEditButton,
   formEditAvatar,
   popupErrorMessage,
-  userNameField,
-  submitAddPhoto,
-  submitChangeAvatar,
-  submitEditProfile,
-  submitDelCard,
 } from "../utils/constants.js";
 import "./index.css";
 import Popup from "../components/Popup.js";
 //
 // функция сообщения об ошибке от сервера
 function showServerErr(err) {
+  console.log(err);
   popupErrorMessage.textContent = err;
   popupError.open();
 }
-//
-// функция показывающая процесс обработки запроса сервером
-function renderLoading(isLoading, button, text) {
-  if (isLoading) {
-    console.log("sadfa");
-    button.value = text;
-  } else {
-    button.value = text;
-  }
-}
+
 //                                                        -----Галерея-----
 //
 // получение имени пользователя
-function getCurrentUserName() {
-  return userNameField.textContent;
+function getUserId() {
+  return userInfo.getUserId();
 }
 
 // установка/снятие лайка
-function likesToggle(id, method) {
+function likesToggle(id, method, obj) {
   api
     .likesToggle(id, method)
     .then((res) => {
-      this.setLikes(res.likes);
+      obj.setLikes(res.likes);
     })
     .catch((err) => showServerErr(err));
 }
@@ -63,17 +50,16 @@ function likesToggle(id, method) {
 function clickBinButton(card, id) {
   popupAreYouSure.open();
   popupAreYouSure.setSubmit(() => {
-    renderLoading(true, submitDelCard, "Удаление...");
+    popupAreYouSure.renderLoading(true, "Удаление...");
     api
       .deleteCard(id)
       .then(() => {
-        card.remove();
+        card.removeCard();
+        popupAreYouSure.close();
       })
       .catch((err) => showServerErr(err))
       .finally(() => {
-        renderLoading(false, submitDelCard, "Удалить");
-
-        popupAreYouSure.close();
+        popupAreYouSure.renderLoading(false, "Удалить");
       });
   });
 }
@@ -94,9 +80,9 @@ function createCard(item) {
     handleCardClick,
     clickBinButton,
     likesToggle,
-    getCurrentUserName
+    getUserId
   );
-  return newGalleryCard.setCard(userNameField); //возвращает готовую карточку
+  return newGalleryCard.setCard(); //возвращает готовую карточку
 }
 //  Объект Section размещает карточки на странице
 const gallery = new Section(
@@ -107,23 +93,23 @@ const gallery = new Section(
 );
 //
 // функция сабмита добавления фотографии
-function SubmitFuncForPopupWithFormsAddPhoto(newCard) {
-  renderLoading(true, submitAddPhoto, "Сохранение...");
+function submitFuncForPopupWithFormsAddPhoto(newCard) {
+  popupWithFormsAddPhoto.renderLoading(true, "Сохранение...");
 
   api
     .postNewCard(newCard)
     .then((res) => {
       gallery.addItem(createCard(res));
+      popupWithFormsAddPhoto.close();
     })
     .catch((err) => showServerErr(err))
     .finally(() => {
-      renderLoading(false, submitAddPhoto, "Создать");
-      popupWithFormsAddPhoto.close();
+      popupWithFormsAddPhoto.renderLoading(false, "Создать");
     });
 }
 // объявление объекта добавление карточки галереи
 const popupWithFormsAddPhoto = new PopupWithForms(
-  SubmitFuncForPopupWithFormsAddPhoto,
+  submitFuncForPopupWithFormsAddPhoto,
   ".popup-add-photo"
 );
 popupWithFormsAddPhoto.setEventListeners();
@@ -135,16 +121,16 @@ popupWithFormsAddPhoto.setEventListeners();
 //
 // функция сабмит в форме изменения данных пользователя
 function submitPopupWithFormsUserProfile(formValues) {
-  renderLoading(true, submitEditProfile, "Сохранение...");
+  popupWithFormsUserProfile.renderLoading(true, "Сохранение...");
   api
     .setUserInfo(formValues)
     .then((res) => {
       userInfo.setUserInfo(res);
+      popupWithFormsUserProfile.close();
     })
     .catch((err) => showServerErr(err))
     .finally(() => {
-      renderLoading(false, submitEditProfile, "Сохранить");
-      popupWithFormsUserProfile.close();
+      popupWithFormsUserProfile.renderLoading(false, "Сохранить");
     });
 }
 
@@ -157,16 +143,16 @@ popupWithFormsUserProfile.setEventListeners();
 //
 // функция сабмит изменения аватарки пользователя
 function submitPopupWithFormsEditAvatar(formValues) {
-  renderLoading(true, submitChangeAvatar, "Сохранение...");
+  popupWithFormsEditAvatar.renderLoading(true, "Сохранение...");
   api
     .patchAvatar(formValues)
     .then((res) => {
       userInfo.setAvatar(res);
+      popupWithFormsEditAvatar.close();
     })
     .catch((err) => showServerErr(err))
     .finally(() => {
-      renderLoading(false, submitChangeAvatar, "Сохранить");
-      popupWithFormsEditAvatar.close();
+      popupWithFormsEditAvatar.renderLoading(false, "Сохранить");
     });
 }
 // объявление объекта изменение аватарки пользователя
@@ -189,15 +175,7 @@ popupWithImage.setEventListeners();
 
 // объявление объекта открытия окна подстверждения удаления карточки
 
-function SubmitFuncForPopupWithConfirmation(id) {
-  api.deleteCard(id).then(() => {
-    this.close();
-  });
-}
-const popupAreYouSure = new PopupWithConfirmation(
-  ".popup-confirm",
-  SubmitFuncForPopupWithConfirmation
-);
+const popupAreYouSure = new PopupWithConfirmation(".popup-confirm");
 popupAreYouSure.setEventListeners();
 //
 //                                                                -----*****-----
