@@ -1,6 +1,5 @@
 export default class Api {
-  constructor(obj, { showErrFunc }) {
-    this._showErrorMessasge = showErrFunc;
+  constructor(obj) {
     this._baseUrl = obj.baseUrl;
     this._settingsObj = {};
     this._settingsObj.method = "GET";

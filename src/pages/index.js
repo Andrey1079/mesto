@@ -6,6 +6,7 @@ import PopupWithForms from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import Api from "../components/Api.js";
+import PopupError from "../components/PopupError.js";
 import {
   settings,
   popupProfileButton,
@@ -16,15 +17,13 @@ import {
   formAddPhoto,
   avatarEditButton,
   formEditAvatar,
-  popupErrorMessage,
 } from "../utils/constants.js";
 import "./index.css";
-import Popup from "../components/Popup.js";
 //
 // функция сообщения об ошибке от сервера
 function showServerErr(err) {
   console.log(err);
-  popupErrorMessage.textContent = err;
+  popupError.showErrMessage(err);
   popupError.open();
 }
 
@@ -36,11 +35,11 @@ function getUserId() {
 }
 
 // установка/снятие лайка
-function likesToggle(id, method, obj) {
+function likesToggle(id, method, card) {
   api
     .likesToggle(id, method)
     .then((res) => {
-      obj.setLikes(res.likes);
+      card.setLikes(res.likes);
     })
     .catch((err) => showServerErr(err));
 }
@@ -80,7 +79,7 @@ function createCard(item) {
     handleCardClick,
     clickBinButton,
     likesToggle,
-    getUserId
+    getUserId()
   );
   return newGalleryCard.setCard(); //возвращает готовую карточку
 }
@@ -183,7 +182,7 @@ popupAreYouSure.setEventListeners();
 //                                                      -----Попап сообщение об ошибке-----
 
 // объявление попапа с сообщением об ошибке
-const popupError = new Popup(".popup-error");
+const popupError = new PopupError(".popup-error");
 popupError.setEventListeners();
 //
 //                                                                -----*****-----
@@ -196,21 +195,13 @@ const userInfo = new UserInfo({ userDataSelectors: userDataSelectors });
 
 //                                                      -----class Api-----
 //
-const api = new Api(
-  {
-    baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
-    headers: {
-      authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
-      "Content-Type": "application/json",
-    },
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
+  headers: {
+    authorization: "02d169df-2e89-48d4-b456-d324fa7fca22",
+    "Content-Type": "application/json",
   },
-  {
-    showErrFunc: (err) => {
-      popupErrorMessage.textContent = err;
-      popupError.open();
-    },
-  }
-);
+});
 //
 //                                                          -----*****-----
 
@@ -228,8 +219,7 @@ formAvatarValidation.enableValidation();
 //                                                     -----СОБЫТИЯ-----
 
 // кнопка добавления фото
-addPhotoButton.addEventListener("click", (evt) => {
-  (evt) => evt.preventDefault();
+addPhotoButton.addEventListener("click", () => {
   formCardValidator.resetInputsErrors();
   popupWithFormsAddPhoto.open();
 });

@@ -1,6 +1,6 @@
-import Popup from "./Popup";
+import PopupWithLoadingStatus from "./PopupWithLoadingStatus";
 
-export default class PopupWithConfirmation extends Popup {
+export default class PopupWithConfirmation extends PopupWithLoadingStatus {
   constructor(popupSelector) {
     super(popupSelector);
     this._submitFunc = "";

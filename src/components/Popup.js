@@ -2,7 +2,6 @@ export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupCloseButton = this._popup.querySelector(".popup__close-button ");
-    this._submitButton = this._popup.querySelector(".popup__submit-button");
   }
   //
   open() {
@@ -34,13 +33,5 @@ export default class Popup {
   //
   setEventListeners() {
     this._popupCloseButton.addEventListener("click", this.close.bind(this));
-  }
-
-  renderLoading(isLoading, text) {
-    if (isLoading) {
-      this._submitButton.value = text;
-    } else {
-      this._submitButton.value = text;
-    }
   }
 }

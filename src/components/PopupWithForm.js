@@ -1,7 +1,7 @@
-import Popup from "./Popup.js";
-export default class PopupWithForms extends Popup {
+import PopupWithLoadingStatus from "./PopupWithLoadingStatus.js";
+export default class PopupWithForms extends PopupWithLoadingStatus {
   constructor(submitFunc, popupSelector) {
-    super(popupSelector); //div попапа
+    super(popupSelector);
     this._submitFunc = submitFunc;
     this._form = this._popup.querySelector(".popup__form");
     this._inputs = this._form.querySelectorAll(".popup__form-item");

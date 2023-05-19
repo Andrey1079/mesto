@@ -5,7 +5,7 @@ export default class Card {
     openPopupFunc,
     clickBinButton,
     likesToggleFunc,
-    getUserId
+    UserId
   ) {
     this._galleryItemTemplate = document
       .querySelector(galleryItemTemplate)
@@ -34,7 +34,7 @@ export default class Card {
     this.clickBinButton = clickBinButton;
     this._likesToggleFunc = likesToggleFunc;
     this._cardOwnerId = card.owner._id;
-    this._ownerId = getUserId();
+    this._ownerId = UserId;
   }
 
   setCard() {
